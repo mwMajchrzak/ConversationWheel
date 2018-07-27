@@ -18,20 +18,22 @@ class Game extends Component {
         return (this.state.wasWheelSpinned ? `Let's talk about ${this.state.topic}` : "Spin the wheel and find a random topic!");
     }
 
-    onIconPress = () => this.props.navigation.openDrawer();
+    onMenuIconPress = () => this.props.navigation.openDrawer();
 
     toggleMenu = ()  => {
             const currentState = this.state.isMenuOpen
             this.setState({ isMenuOpen: !currentState});   
     };
 
+    onLogInIconPress = () => this.props.navigation.navigate('LogInForm');
+
     render() {
 
         return (
             <Wrapper> 
                 <TopBar> 
-                    <MenuIcon onIconPress={this.onIconPress}/>
-                    <LogInButton> LogIn </LogInButton>
+                    <MenuIcon onIconPress={this.onMenuIconPress}/>
+                    <LogInButton onPressEvent={this.onLogInIconPress}> LogIn </LogInButton>
                 </TopBar>
                 <HeaderSection text={this.renderHeader()}/>
                 <CategoryMenu 

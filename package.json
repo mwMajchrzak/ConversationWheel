@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "firebase": "^5.3.0",
     "react": "16.4.1",
     "react-native": "0.56.0",
     "react-native-chooser": "^1.7.0",
@@ -14,7 +15,14 @@
     "react-native-router-flux": "^4.0.0-beta.31",
     "react-native-selectme": "^1.2.3",
     "react-native-vector-icons": "^4.6.0",
-    "react-navigation": "^2.9.0"
+    "react-navigation": "^2.9.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.10.0",
+    "redux-saga": "^0.16.0",
+    "redux-thunk": "^2.3.0",
+    "remote-redux-devtools": "^0.5.12"
   },
   "devDependencies": {
     "babel-jest": "23.4.0",

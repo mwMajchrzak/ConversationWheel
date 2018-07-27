@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { createStackNavigator, DrawerNavigator, drawerIcon } from 'react-navigation';
+import { createStackNavigator, DrawerNavigator, drawerIcon, goBack } from 'react-navigation';
 import Game from './components/Game';
 import Create from './components/Create';
 import Friends from './components/Friends';
 import Settings from './components/Settings';
-import LogIn from './components/LogIn';
+import LoginForm from './components/LoginForm';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+//import Icon from 'react-native-vector-icons/Feather';
+import ReduxTunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers';
+import firebase from 'firebase';
+import { Provider } from 'react-redux';
 
 const DrawerStack = DrawerNavigator({
     Game: { 
@@ -53,7 +58,8 @@ const DrawerStack = DrawerNavigator({
             title: 'Settings',
             drawerIcon: () => (
                 <Icon  
-                type="Ionicons" name="ios-options-outline"  
+                type="Ionicons" 
+                name="ios-options-outline"  
                 size={25}
                 onPress={() => closeDrawer()}/>
             )
@@ -61,6 +67,14 @@ const DrawerStack = DrawerNavigator({
     },
     
    
+});
+const logInNavigation = createStackNavigator({
+    LogInForm: { screen: LoginForm }
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+    headerVisible: false,
+    }
 });
 
 const stackNavigation = createStackNavigator({
@@ -75,14 +89,14 @@ const stackNavigation = createStackNavigator({
 
 const RootStack = createStackNavigator({
     drawerStack: { screen: stackNavigation },
-    logIn: { screen: LogIn }
+    logIn: { screen: logInNavigation }
 },
 {
      title: 'Main',
      initialRouteName: 'drawerStack',
      headerMode: 'none',
         navigationOptions: {
-          headerVisible: false,
+        headerVisible: false,
         }
 });
 
@@ -92,8 +106,28 @@ const RootStack = createStackNavigator({
 
 
  class App extends Component {
+    componentWillMount() {
+        const config = {
+            apiKey: "AIzaSyCZMPTBF7I-FEwxBH3D-fcX2ukGQrHYkA4",
+            authDomain: "conversationwheel-913f2.firebaseapp.com",
+            databaseURL: "https://conversationwheel-913f2.firebaseio.com",
+            projectId: "conversationwheel-913f2",
+            storageBucket: "conversationwheel-913f2.appspot.com",
+            messagingSenderId: "151958554148"
+          };
+
+          firebase.initializeApp(config);
+    };
+
+
+
      render() {
-         return <RootStack />
+        const store = createStore(reducers, {}, applyMiddleware(ReduxTunk));
+         return (
+         <Provider store={store}>
+            <RootStack />
+         </Provider>
+         )   
      }
  }
 
