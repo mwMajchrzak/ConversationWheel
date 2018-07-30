@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, componentDidUpdate } from 'react';
 import  { connect } from 'react-redux'
 import { emailChanged, passwordChanged, loginUser } from '../actions';
 import { Card, CardSection, Input, Button, Spinner } from './common';
@@ -6,7 +6,7 @@ import { Text, View } from 'react-native';
 import { GoBackIcon, TopBar, Wrapper } from './common'; 
 
 class LoginForm extends Component {
-
+    
     onBackIconPress = () => this.props.navigation.navigate('drawerStack');
 
     onEmailChange(text) {
@@ -21,6 +21,11 @@ class LoginForm extends Component {
         this.props.loginUser({ email, password });
         console.log('button was pressed');
     }
+
+    componentDidUpdate(prevProps) { 
+        const { user, navigation } = this.props
+        return prevProps.user != user ? navigation.navigate('drawerStack') : null 
+    };
 
     renderError() {
         
@@ -44,9 +49,13 @@ class LoginForm extends Component {
             </Button>
          );
     }
+    
 
 
     render() {
+
+
+        console.log('login method LogInForm', this.props.loginUser);
         return (
              <Wrapper> 
                 <TopBar> 
@@ -91,7 +100,8 @@ const mapStateToProps = state =>   {
         email: state.auth.email,
         password: state.auth.password,
         error: state.auth.error,
-        loading: state.auth.loading
+        loading: state.auth.loading,
+        user: state.auth.user
     };
 };
 export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(LoginForm);

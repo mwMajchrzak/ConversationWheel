@@ -9,7 +9,7 @@ import Settings from './components/Settings';
 import LoginForm from './components/LoginForm';
 import Icon from 'react-native-vector-icons/Ionicons';
 //import Icon from 'react-native-vector-icons/Feather';
-import ReduxTunk from 'redux-thunk';
+import ReduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import firebase from 'firebase';
@@ -108,12 +108,12 @@ const RootStack = createStackNavigator({
  class App extends Component {
     componentWillMount() {
         const config = {
-            apiKey: "AIzaSyCZMPTBF7I-FEwxBH3D-fcX2ukGQrHYkA4",
-            authDomain: "conversationwheel-913f2.firebaseapp.com",
-            databaseURL: "https://conversationwheel-913f2.firebaseio.com",
-            projectId: "conversationwheel-913f2",
-            storageBucket: "conversationwheel-913f2.appspot.com",
-            messagingSenderId: "151958554148"
+            apiKey: 'AIzaSyCZMPTBF7I-FEwxBH3D-fcX2ukGQrHYkA4',
+            authDomain: 'conversationwheel-913f2.firebaseapp.com',
+            databaseURL: 'https://conversationwheel-913f2.firebaseio.com',
+            projectId: 'conversationwheel-913f2',
+            storageBucket: 'conversationwheel-913f2.appspot.com',
+            messagingSenderId: '151958554148'
           };
 
           firebase.initializeApp(config);
@@ -122,7 +122,7 @@ const RootStack = createStackNavigator({
 
 
      render() {
-        const store = createStore(reducers, {}, applyMiddleware(ReduxTunk));
+        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
          return (
          <Provider store={store}>
             <RootStack />

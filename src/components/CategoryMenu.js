@@ -51,8 +51,8 @@ class CategoryMenu extends Component {
             category: 'Select Category', 
             categories: []
     }
-
     getList = () => {
+
         const li = [
             { category: 'food', key: 'food'},
             { category: 'celebrities', key: 'celebrities'},
@@ -92,7 +92,7 @@ class CategoryMenu extends Component {
  
     showMenu = () => {
         
-        
+        console.log('props in categorymenu', this.props.categoriesObject )
         if (this.props.isMenuOpen === true ) {
             return (
                 <View style={styles.containerCategoriesList}>
@@ -111,7 +111,16 @@ class CategoryMenu extends Component {
         return console.log('false')
     }    
     
+
+    createList = () => {
+        const Data = Array.from(this.props.categoriesObject);
+        const list = Data.map(function(object) {
+            return object.category;
+        });
+        return console.log(list);
+    }
     render() {
+
         
         return (
         <View style={styles.containerCategoryMenu} >
@@ -121,6 +130,7 @@ class CategoryMenu extends Component {
                     selectedValue={this.state.category}
                 />
                 {this.showMenu()}
+                {this.createList()}
             
          </View>
         )

@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Button } from 'react-native';
 import { Wrapper, LogInButton, TopBar, MenuIcon } from  './common';
 import Icon from 'react-native-vector-icons/Feather';
 import HeaderSection from './HeaderSection';
 import Wheel from './Wheel';
 import CategoryMenu from './CategoryMenu';
+import  { connect } from 'react-redux'
+import { logoutUser, fetchCustomCategories } from '../actions';
 
 class Game extends Component {
+
+    componentWillMount() {
+      this.props.fetchCustomCategories();
+      console.log('props customCategories', this.props.customCategories);
+    }
 
     state = {
         wasWheelSpinned: true,
@@ -14,8 +21,13 @@ class Game extends Component {
         isMenuOpen: 'false',
     }
 
-    renderHeader() {
-        return (this.state.wasWheelSpinned ? `Let's talk about ${this.state.topic}` : "Spin the wheel and find a random topic!");
+    renderHeaderText() {
+        const { wasWheelSpinned, topic } = this.state
+        return (wasWheelSpinned ? `Let's talk about ${topic}` : "Spin the wheel and find a random topic!");
+    }
+    renderLogInButtonText() {
+        console.log('user', this.props.user);
+        return (this.props.user != null) ? 'LogOut' : 'LogIn';
     }
 
     onMenuIconPress = () => this.props.navigation.openDrawer();
@@ -25,7 +37,10 @@ class Game extends Component {
             this.setState({ isMenuOpen: !currentState});   
     };
 
-    onLogInIconPress = () => this.props.navigation.navigate('LogInForm');
+    passOnPressEvent = () => {
+        const { navigation, user, logoutUser } = this.props
+        return (user != null) ? logoutUser() : navigation.navigate('LogInForm')
+    }
 
     render() {
 
@@ -33,10 +48,11 @@ class Game extends Component {
             <Wrapper> 
                 <TopBar> 
                     <MenuIcon onIconPress={this.onMenuIconPress}/>
-                    <LogInButton onPressEvent={this.onLogInIconPress}> LogIn </LogInButton>
+                    <LogInButton onPressEvent={this.passOnPressEvent}> {this.renderLogInButtonText()} </LogInButton>
                 </TopBar>
-                <HeaderSection text={this.renderHeader()}/>
+                <HeaderSection text={this.renderHeaderText()}/>
                 <CategoryMenu 
+                    categoriesObject={this.props.customCategories}
                     isMenuOpen={this.state.isMenuOpen}
                     toggleMenu={this.toggleMenu}/>
                 <Wheel />
@@ -51,4 +67,17 @@ const styles = {
         margin: 1
     }
 }
-export default Game;
+
+const mapStateToProps = state =>   {
+    console.log('mapstate to props state', state.cat.customCategories);
+    return {
+        email: state.auth.email,
+        password: state.auth.password,
+        error: state.auth.error,
+        loading: state.auth.loading,
+        user: state.auth.user,
+        customCategories: state.cat.customCategories
+    };
+
+};
+export default connect(mapStateToProps, { logoutUser, fetchCustomCategories })(Game);

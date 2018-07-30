@@ -1,25 +1,10 @@
-// import { EMAIL_CHANGED } from '../actions/types';
-
-// const INITIAL_STATE = { email:'' }
-
-// export default (state= INITIAL_STATE, action) => {
-//     switch(action.type) {
-//         case EMAIL_CHANGED:
-//          return { ...state, email: action.payload};
-//         default: 
-//         return state;
-//     }
-// };
-
-
-
-
 import { 
     EMAIL_CHANGED,
     PASSWORD_CHANGED, 
     LOGIN_USER_SUCCESS, 
     LOGIN_USER_FAIL,
-    LOGIN_USER 
+    LOGIN_USER,
+    LOGOUT_USER_SUCCESS 
 }   from '../actions/types'; /*czesty blad - przy importcie niewlasciwej zmiennej nie wyswietla sie blad*/
 const INITIAL_STATE = { email: '', password: '', user: null, error: '', loading: false};
 
@@ -45,6 +30,11 @@ export default (state = INITIAL_STATE, action) => {
             
             return { ...state, error: 'authentication failed', loading: false };    
             //console.log( 'fail',state.error );
+
+        case LOGOUT_USER_SUCCESS:
+            
+            return { ...state, ...INITIAL_STATE };    
+            //console.log( 'fail',state.error );    
         default:
             return state;
     }
