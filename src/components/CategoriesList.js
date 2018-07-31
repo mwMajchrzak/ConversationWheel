@@ -6,7 +6,7 @@ export default class CategoriesList extends Component {
     
     createListOfCategories = () => {
         const categoriesList = this.props.categoriesObject.map((object) => {
-            return ({ category: object.category, key: object.category })
+            return ({ category: object.category, key: object.category });
         });  
         return categoriesList;      
     }

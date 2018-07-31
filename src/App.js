@@ -3,9 +3,10 @@ import { View, Text } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { createStackNavigator, DrawerNavigator, drawerIcon, goBack } from 'react-navigation';
 import Game from './components/Game';
-import Create from './components/Create';
+import ManageCategories from './components/ManageCategories';
 import Friends from './components/Friends';
 import Settings from './components/Settings';
+import CreateCategory from './components/CreateCategory';
 import LoginForm from './components/LoginForm';
 import Icon from 'react-native-vector-icons/Ionicons';
 //import Icon from 'react-native-vector-icons/Feather';
@@ -29,7 +30,7 @@ const DrawerStack = DrawerNavigator({
         }
     },
     Create: { 
-        screen: Create,
+        screen: ManageCategories,
         navigationOptions: {
             title: 'Create Your Topics',
             drawerIcon: () => (
@@ -77,6 +78,15 @@ const logInNavigation = createStackNavigator({
     }
 });
 
+const createCategoryNavigation = createStackNavigator({
+    CreateCategory: { screen: CreateCategory }
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+    headerVisible: false,
+    }
+});
+
 const stackNavigation = createStackNavigator({
     DrawerStack1: { screen: DrawerStack }
 }, {
@@ -89,7 +99,8 @@ const stackNavigation = createStackNavigator({
 
 const RootStack = createStackNavigator({
     drawerStack: { screen: stackNavigation },
-    logIn: { screen: logInNavigation }
+    logIn: { screen: logInNavigation },
+    createCategory: { screen: createCategoryNavigation }
 },
 {
      title: 'Main',

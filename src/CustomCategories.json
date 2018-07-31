@@ -6,5 +6,9 @@
     {
         "category":"Make it akward", 
         "topics": [ "if you like me", "who you hate the most"] 
+    },
+    {
+        "category":"food", 
+        "topics": [ "potato", "tomato"] 
     }
 ]

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {MenuIcon, Wrapper, TopBar,LogInButton}  from './common';
 
 
-class Create extends Component {
+class ManageCategories extends Component {
 
     onIconPress = () => this.props.navigation.openDrawer();
 
@@ -17,4 +17,4 @@ class Create extends Component {
         )
     }
 }
-export default Create;
+export default ManageCategories;

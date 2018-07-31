@@ -54,7 +54,6 @@ class LoginForm extends Component {
 
     render() {
 
-
         console.log('login method LogInForm', this.props.loginUser);
         return (
              <Wrapper> 

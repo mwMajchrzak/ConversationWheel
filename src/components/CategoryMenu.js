@@ -39,7 +39,7 @@
 
 
 import React, { Component, componentWillMount } from 'react';
-import {  Text,  View, TouchableOpacity } from 'react-native';
+import {  Text,  View, TouchableOpacity, Button, Navigator } from 'react-native';
 import SelectedCategory from './SelectedCategory';
 import CategoriesList from './CategoriesList';
 import Icon from 'react-native-vector-icons/Feather';
@@ -49,30 +49,18 @@ class CategoryMenu extends Component {
 
     state = {
             category: 'Select Category', 
-            categories: []
     }
-    getList = () => {
-
-        const li = [
-            { category: 'food', key: 'food'},
-            { category: 'celebrities', key: 'celebrities'},
-            { category: 'lifehacks', key: 'lifehacks'},
-            { category: 'sports', key: 'sports'},
-        ]
-        
-        this.setState({
-          categories: li
-        })
-    }    
-
-    componentWillMount() {
-        this.getList()
-        }
 
     updateCategory = (category) => {
        this.setState({ category: category })
        this.props.toggleMenu();
     };
+
+    onButtonPress = () => {
+        console.log('tuuuuuu', this.props)
+        // const { navigate } = this.props.navigation;
+        // return navigate('LogInForm')
+    } 
 
     createButton() {
         return (
@@ -82,9 +70,12 @@ class CategoryMenu extends Component {
                     type="Feather" 
                     name="plus-circle"  
                     size={20} 
-                   // onPress={}
                 />  
-                <Text style={styles.textStyle} >Create new category </Text>  
+                <Button 
+                    style={styles.textStyle} 
+                    title="Create new category" 
+                    onPress={this.props.onCreateButtonPress}
+                /> 
             </TouchableOpacity>
         );    
     }
@@ -96,19 +87,17 @@ class CategoryMenu extends Component {
         if (this.props.isMenuOpen === true ) {
             return (
                 <View style={styles.containerCategoriesList}>
-                <CategoriesList 
-                    updateCategory={this.updateCategory} 
-                    categories={this.state.categories}
-                    selectedCategory={this.state.category}
-                    categoriesObject={this.props.categoriesObject}
-                />
-                {this.createButton()} 
+                    <CategoriesList 
+                        updateCategory={this.updateCategory} 
+                        categories={this.state.categories}
+                        selectedCategory={this.state.category}
+                        categoriesObject={this.props.categoriesObject}
+                    />
+                    {this.createButton()}
                 </View>
         
             )    
         }
-
-        return console.log('false')
     }    
     
 
@@ -120,7 +109,7 @@ class CategoryMenu extends Component {
     //     return console.log(list);
     // }
     render() {
-
+        
         
         return (
         <View style={styles.containerCategoryMenu} >

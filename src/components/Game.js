@@ -32,6 +32,8 @@ class Game extends Component {
 
     onMenuIconPress = () => this.props.navigation.openDrawer();
 
+    onCreateButtonPress = () => this.props.navigation.navigate('createCategory');
+
     toggleMenu = ()  => {
            // console.log('toggle', this.props.customCategories);
             const currentState = this.state.isMenuOpen
@@ -44,7 +46,7 @@ class Game extends Component {
     }
 
     render() {
-
+        console.log('tuuuuuu render game ', this.props.navigation)
         return (
             <Wrapper> 
                 <TopBar> 
@@ -53,6 +55,7 @@ class Game extends Component {
                 </TopBar>
                 <HeaderSection text={this.renderHeaderText()}/>
                 <CategoryMenu 
+                    onCreateButtonPress={this.onCreateButtonPress}
                     categoriesObject={this.props.customCategories}
                     isMenuOpen={this.state.isMenuOpen}
                     toggleMenu={this.toggleMenu}/>
