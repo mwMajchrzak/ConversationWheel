@@ -100,7 +100,7 @@ class CategoryMenu extends Component {
                     updateCategory={this.updateCategory} 
                     categories={this.state.categories}
                     selectedCategory={this.state.category}
-    
+                    categoriesObject={this.props.categoriesObject}
                 />
                 {this.createButton()} 
                 </View>
@@ -112,13 +112,13 @@ class CategoryMenu extends Component {
     }    
     
 
-    createList = () => {
-        const Data = Array.from(this.props.categoriesObject);
-        const list = Data.map(function(object) {
-            return object.category;
-        });
-        return console.log(list);
-    }
+    // createList = () => {
+    //     const Data = Array.from(this.props.categoriesObject);
+    //     const list = Data.map(function(object) {
+    //         return object.category;
+    //     });
+    //     return console.log(list);
+    // }
     render() {
 
         
@@ -130,7 +130,6 @@ class CategoryMenu extends Component {
                     selectedValue={this.state.category}
                 />
                 {this.showMenu()}
-                {this.createList()}
             
          </View>
         )

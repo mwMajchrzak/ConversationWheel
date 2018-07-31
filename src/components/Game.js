@@ -10,7 +10,7 @@ import { logoutUser, fetchCustomCategories } from '../actions';
 
 class Game extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
       this.props.fetchCustomCategories();
       console.log('props customCategories', this.props.customCategories);
     }
@@ -33,6 +33,7 @@ class Game extends Component {
     onMenuIconPress = () => this.props.navigation.openDrawer();
 
     toggleMenu = ()  => {
+           // console.log('toggle', this.props.customCategories);
             const currentState = this.state.isMenuOpen
             this.setState({ isMenuOpen: !currentState});   
     };
@@ -78,6 +79,6 @@ const mapStateToProps = state =>   {
         user: state.auth.user,
         customCategories: state.cat.customCategories
     };
-
+    console.log('mapstate to props', this.props.customCategories);
 };
 export default connect(mapStateToProps, { logoutUser, fetchCustomCategories })(Game);

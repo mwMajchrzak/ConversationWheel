@@ -4,6 +4,7 @@ import data from '../CustomCategories.json';
 const INITIAL_STATE = { customCategories:'', userCategories: '' };
 
 
+
 export default (state = INITIAL_STATE, action) => {
     console.log(action);
     switch (action.type) {
