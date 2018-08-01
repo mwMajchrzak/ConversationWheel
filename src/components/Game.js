@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import { View, Button } from 'react-native';
+import  { connect } from 'react-redux'
+
 import { Wrapper, LogInButton, TopBar, MenuIcon } from  './common';
-import Icon from 'react-native-vector-icons/Feather';
 import HeaderSection from './HeaderSection';
 import Wheel from './Wheel';
 import CategoryMenu from './CategoryMenu';
-import  { connect } from 'react-redux'
-import { logoutUser, fetchCustomCategories } from '../actions';
+import { logoutUser, fetchCustomCategories, fetchCategories } from '../actions';
 
 class Game extends Component {
 
-    componentDidMount() {
-      this.props.fetchCustomCategories();
-      console.log('props customCategories', this.props.customCategories);
+    componentWillMount() {
+        this.props.fetchCustomCategories();
+        //console.log('useer game', this.props.user);
+        if(this.props.user != null) this.props.fetchCategories();   
+        console.log('props customCategories', this.props.customCategories);
+        console.log('props Categories', this.props.userCategories);
     }
-
+  
     state = {
         wasWheelSpinned: true,
         topic:'tomato',
@@ -26,7 +29,6 @@ class Game extends Component {
         return (wasWheelSpinned ? `Let's talk about ${topic}` : "Spin the wheel and find a random topic!");
     }
     renderLogInButtonText() {
-        console.log('user', this.props.user);
         return (this.props.user != null) ? 'LogOut' : 'LogIn';
     }
 
@@ -35,7 +37,6 @@ class Game extends Component {
     onCreateButtonPress = () => this.props.navigation.navigate('createCategory');
 
     toggleMenu = ()  => {
-           // console.log('toggle', this.props.customCategories);
             const currentState = this.state.isMenuOpen
             this.setState({ isMenuOpen: !currentState});   
     };
@@ -46,7 +47,6 @@ class Game extends Component {
     }
 
     render() {
-        console.log('tuuuuuu render game ', this.props.navigation)
         return (
             <Wrapper> 
                 <TopBar> 
@@ -73,15 +73,15 @@ const styles = {
 }
 
 const mapStateToProps = state =>   {
-    console.log('mapstate to props state', state.cat.customCategories);
+    console.log('mapstate to props state', state.cat.userCategories);
     return {
         email: state.auth.email,
         password: state.auth.password,
         error: state.auth.error,
         loading: state.auth.loading,
         user: state.auth.user,
-        customCategories: state.cat.customCategories
+        customCategories: state.cat.customCategories,
+        userCategories: state.cat.userCategories
     };
-    console.log('mapstate to props', this.props.customCategories);
 };
-export default connect(mapStateToProps, { logoutUser, fetchCustomCategories })(Game);
+export default connect(mapStateToProps, { logoutUser, fetchCustomCategories, fetchCategories })(Game);

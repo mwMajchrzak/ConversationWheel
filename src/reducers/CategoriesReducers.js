@@ -1,4 +1,4 @@
-import {  SAVE_TOPIC, CUSTOM_CATEGORIES_FETCH_SUCCESS, TOPIC_CHANGED, CATEGORY_CHANGED } from '../actions/types'; 
+import {  CATEGORIES_FETCH_SUCCESS, CATEGORY_CREATED, SAVE_TOPIC, CUSTOM_CATEGORIES_FETCH_SUCCESS, TOPIC_CHANGED, CATEGORY_CHANGED } from '../actions/types'; 
 import data from '../CustomCategories.json';
 
 const INITIAL_STATE = { customCategories:'', userCategories: '', category:'', topic:'', topics:'' };
@@ -19,8 +19,12 @@ export default (state = INITIAL_STATE, action) => {
 
         case SAVE_TOPIC:
             return { ...state, topics: [...state.topics, action.payload], topic:''}; 
-    
 
+        case CATEGORY_CREATED:
+            return { ...state, category:'', topic:'', topics:''}
+    
+        case CATEGORIES_FETCH_SUCCESS:
+            return { ...state, userCategories: action.payload  }
         default:
             return state;
     }

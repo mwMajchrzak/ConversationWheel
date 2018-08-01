@@ -3,7 +3,7 @@ export * from './LogInButton';
 export * from './TopBar';
 export * from './MenuIcon';
 export * from './GoBackIcon';
-
+export * from './CircleButton';
 export * from './Button';
 export * from './Card';
 export * from './CardSection';

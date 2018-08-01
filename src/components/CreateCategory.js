@@ -1,15 +1,13 @@
 import React, { Component, componentDidUpdate } from 'react';
 import  { connect } from 'react-redux'
-import { saveTopic, topicChanged, categoryChanged } from '../actions';
-import { Card, CardSection, Input, Button, Spinner } from './common';
+import { categoryCreate, saveTopic, topicChanged, categoryChanged } from '../actions';
+import { Card, CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper  } from './common';
 import { Text, View, FlatList } from 'react-native';
 import TopicsList from './TopicsList'
-import { GoBackIcon, TopBar, Wrapper } from './common'; 
 
 class CreateCategory extends Component {
     
     onBackIconPress = () => this.props.navigation.navigate('drawerStack');
-
 
     onCategoryChange(text) {
         this.props.categoryChanged(text);
@@ -22,24 +20,23 @@ class CreateCategory extends Component {
     onTopicButtonPress = () => {
         this.props.saveTopic(this.props.topic);
     }
+
+
+
     onCategoryButtonPress() {
-        // const { email, password } = this.props;
-        // this.props.loginUser({ email, password });
-        console.log('button was pressed');
+
+        if (this.props.user != null) {
+
+            const { topics, category} = this.props;
+            return this.props.categoryCreate({ category, topics });
+            
+        }
+        return console.log( 'you can not create category')
     }
 
-    // renderError() {
-        
-    //     if (this.props.error) {
-    //         return (
-    //             <View style={{ backgroundColor: 'white' }}>
-    //                 <Text style={ styles.errorTextStyle }> 
-    //                     {this.props.error}
-    //                 </Text>
-    //             </View>    
-    //         );
-    //     }
-    // }
+
+
+
     renderCategoryButton = () => {
         return (
                 <Button onPress={this.onCategoryButtonPress.bind(this)}> 
@@ -49,49 +46,10 @@ class CreateCategory extends Component {
     }
     renderTopicButton() {
         return (
-                <Button onPress={this.onTopicButtonPress.bind(this)}> 
-                    add topic
-                </Button>
+                <CircleButton onPress={this.onTopicButtonPress.bind(this)}> 
+                </CircleButton>
          );
     }
-    // createListOfTopics = () => {
-    //     //console.log(this.props.topics)
-    //     const topicsList = [];
-    //     const topicsList = this.props.topics.map((object) => {
-    //         return ({ topic: object, key: object });
-    //     });  
-    //     return (topicsList);      
-    // }
-
-
-   
-
-    // renderTopics = ()  => {
-    //     const topics= this.props.topics
-    //     return (
-    //     <View>    
-    //     {topics.map((topic, index) => (
-    //         <Text>{topic} </Text>
-    //     ))};
-    //     </View>
-    //         // <FlatList
-    //         //     data={this.createListOfTopics()}
-    //         //     renderItem={({ item }) => 
-    //         //         <Text> {item.topic} </Text>
-    //         //         //     updateCategory={this.props.updateCategory} 
-    //         //         //     category={item.category}
-    //         //         //     selectedCategory={this.props.selectedCategory}
-    //         //         // />     
-    //         //     }
-    //         // />
-    //         // topicsList.map( function(topic) {
-    //         //     return (
-    //         //         <Text style={{ margin: 5 }}>{topic}</Text>
-    //         //     );
-    //         // });
-    //     );
-    // }
-
 
     render() {     
         return (
@@ -102,35 +60,43 @@ class CreateCategory extends Component {
                 <View style={styles.inputSection}>
                  
                     <View style={styles.viewSeciton} > 
-                        <Text style={styles.instructionText}>Name category</Text>
-                        
+                        <Text style={styles.titleText}>Create Your Category</Text>
                         <Input 
-                        
-                        placeholder="Food"
+                        label={false}
+                        placeholder="Type name of category..."
                         onChangeText={this.onCategoryChange.bind(this)}
                         value={this.props.category}
                         />
                     </View>
-                    <View style={styles.viewSeciton} > 
-                            <Text style={styles.instructionText}>Your topic</Text>
                     
+                    <CardSection style={{ marginTop: 15, borderBottomWidth: 0 }}>
+                        <Text style={styles.topicText}>Your topics</Text>
+                    </CardSection> 
+
+                     <CardSection style={{ borderBottomWidth: 0, marginBottom:0, paddingBottom: 0}}>
+                        <TopicsList topics={this.props.topics} />
+                    </CardSection>
+                    
+                    <View style={styles.viewSecitonRow} > 
+                       
                         <Input 
-                        placeholder="topic"
+                        inputPropsStyle={{ marginTop: 15 }}
+                        label={false}
+                        autoCapitalize = "none"
+                        placeholder="type new topic..."
                         onChangeText={this.onTopicChange.bind(this)}
                         value={this.props.topic}    
                         />
+                        {this.renderTopicButton()}
+
                     </View>
-                
-                <CardSection style={{flex: 1, borderBottomWidth: 0}}>
-                {this.renderTopicButton()}
-                </CardSection>
-                <CardSection style={{flex: 4, borderBottomWidth: 0}}>
-                <TopicsList topics={this.props.topics} />
-                </CardSection>
-                <CardSection style={{flex: 1, borderBottomWidth: 0}}>
-                {this.renderCategoryButton()}
-                </CardSection>
-            </View>    
+                    
+
+                   
+                </View>
+                <CardSection style={{flex: 1, borderBottomWidth: 0, padding: 20}}>
+                        {this.renderCategoryButton()}
+                </CardSection>    
              </Wrapper>
         )
     }
@@ -141,13 +107,28 @@ const styles = {
     },
 
     viewSeciton: {
-        padding: 15,
-        flex: 2,
+        padding: 10,
+        flex: 1,
+        marginLeft: 10,
+    },
+    viewSecitonRow: {
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        marginLeft: 10,
+        padding: 10,
+        paddingTop: 0,
+        flex: 3,
     },
 
-    instructionText: {
-        fontSize: 15,
-        padding: 5
+    topicText: {
+        fontSize: 17,
+        paddingLeft: 20,
+    },
+
+    titleText: {
+        fontSize: 25,
+        padding: 5,
+        marginBottom: 30
     },
 }
 
@@ -155,7 +136,8 @@ const mapStateToProps = state =>   {
     return {
         category: state.cat.category,
         topic: state.cat.topic,
-        topics: state.cat.topics
+        topics: state.cat.topics,
+        user: state.auth.user
     };
 };
-export default connect(mapStateToProps, { saveTopic, topicChanged, categoryChanged })(CreateCategory);
+export default connect(mapStateToProps, { categoryCreate, saveTopic, topicChanged, categoryChanged })(CreateCategory);

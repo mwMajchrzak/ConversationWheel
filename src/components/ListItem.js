@@ -8,11 +8,9 @@ class ListItem extends Component {
      };
 
      renderSeparator() {
-        console.log('czesc')
         return <View style = {styles.lineStyle} />
     };
     render() {
-        console.log(this.props.selectedCategory)
         const isCategorySame = this.props.category != this.props.selectedCategory;
      
         if (isCategorySame) {

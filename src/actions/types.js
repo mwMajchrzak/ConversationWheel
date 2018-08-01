@@ -1,6 +1,8 @@
 export const CATEGORY_CHANGED = 'category_changed';
 export const TOPIC_CHANGED = 'topic_changed';
 export const SAVE_TOPIC = 'save_topic';
+export const CATEGORY_CREATED = 'category_created';
+export const CATEGORIES_FETCH_SUCCESS = 'categories_fetch_success'
 
 export const EMAIL_CHANGED = 'email_changed';
 export const PASSWORD_CHANGED = 'password_changed';

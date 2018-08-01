@@ -19,12 +19,13 @@ class LoginForm extends Component {
     onButtonPress() {
         const { email, password } = this.props;
         this.props.loginUser({ email, password });
-        console.log('button was pressed');
     }
 
     componentDidUpdate(prevProps) { 
         const { user, navigation } = this.props
-        return prevProps.user != user ? navigation.navigate('drawerStack') : null 
+        return   (
+            prevProps.user != user ? navigation.navigate('drawerStack') : null 
+        )
     };
 
     renderError() {
@@ -49,20 +50,31 @@ class LoginForm extends Component {
             </Button>
          );
     }
-    
+    renderHeader() {
+        return (
+            <View>
+                <Text style={styles.currentWindow}>LogIn</Text>
+                <Text style={styles.Widnow}>SignIn</Text>
+            </View>
 
+         );
+    }
 
     render() {
-
-        console.log('login method LogInForm', this.props.loginUser);
         return (
              <Wrapper> 
                 <TopBar> 
                     <GoBackIcon onIconPress={this.onBackIconPress}/>
+                    <View>
+                        <Text>LogIn</Text>
+                        <Text>SignIn</Text>
+                    </View>
+                    
                 </TopBar>
                  <CardSection> 
                      <Input 
-                     label="Email"
+                     label={true}
+                     labelName="Email"
                      placeholder="email@gmail.com"
                      onChangeText={this.onEmailChange.bind(this)}
                      value={this.props.email}
@@ -70,8 +82,9 @@ class LoginForm extends Component {
                  </CardSection>
                  <CardSection> 
                      <Input 
+                     label={true}
                      secureTextEntry
-                     label="Password"
+                     labelName="Password"
                      placeholder="password"
                      onChangeText={this.onPasswordChange.bind(this)}
                      value={this.props.password}    

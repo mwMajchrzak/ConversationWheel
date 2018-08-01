@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/Feather';
 
 class SelectedCategory extends Component {
     renderIcon() {
-        console.log('render Icon', this.props.isMenuOpen)
         if (this.props.isMenuOpen) {
             return (
                 <Icon 
@@ -29,8 +28,6 @@ class SelectedCategory extends Component {
     }
     }
     render() {
-
-        console.log(this.props);
         return (
         <TouchableOpacity  style={styles.container} onPress={this.props.onPress}>
             <Text style={styles.textStyle} >{this.props.selectedValue} </Text>  

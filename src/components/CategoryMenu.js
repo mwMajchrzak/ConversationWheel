@@ -1,43 +1,3 @@
-// import React, { Component } from 'react';
-// import {  AppRegistry, Text, Picker, View, StyleSheet } from 'react-native';
-// import SelectedCategory from './SelectedCategory';
-
-
-
-// class Category extends Component {
-//     constructor(){
-//         super()
-//         this.state = {
-//         }
-//       }
-
-//     updateCategory= (category) => {
-//        this.setState({ category: category })
-//     }
-
-
-
-//     render() {
-//         return (
-//             <View>
-//             <Picker selectedValue = {this.state.category} onValueChange = {this.updateCategory}>
-//                <Picker.Item label = "Steve" value = "steve" />
-//                <Picker.Item label = "Ellen" value = "ellen" />
-//                <Picker.Item label = "Maria" value = "maria" />
-//             </Picker>
-//          </View>
-//         )
-//     }
-// };
-// export default Category;
-
-
-
-
-
-
-
-
 import React, { Component, componentWillMount } from 'react';
 import {  Text,  View, TouchableOpacity, Button, Navigator } from 'react-native';
 import SelectedCategory from './SelectedCategory';
@@ -83,7 +43,6 @@ class CategoryMenu extends Component {
  
     showMenu = () => {
         
-        console.log('props in categorymenu', this.props.categoriesObject )
         if (this.props.isMenuOpen === true ) {
             return (
                 <View style={styles.containerCategoriesList}>
@@ -99,15 +58,7 @@ class CategoryMenu extends Component {
             )    
         }
     }    
-    
 
-    // createList = () => {
-    //     const Data = Array.from(this.props.categoriesObject);
-    //     const list = Data.map(function(object) {
-    //         return object.category;
-    //     });
-    //     return console.log(list);
-    // }
     render() {
         
         
@@ -141,7 +92,6 @@ const styles = {
     containerCategoriesList: {
         alignSelf: 'center',
         width: '100%',
-        //backgroundColor: 'green',
         padding: 0,
         margin: 0
     },
@@ -153,7 +103,6 @@ const styles = {
         alignSelf: 'center',
         justifyContent: 'center',
         height: 50,
-       // backgroundColor: 'green'
     },
     textStyle: {
         alignSelf: 'center',
