@@ -13,11 +13,11 @@ class Game extends Component {
     componentWillMount() {
         this.props.fetchCustomCategories();
         //console.log('willmount', this.props.user);
-        //if(this.props.user != null) this.props.fetchCategories();   
+        if(this.props.user != null) this.props.fetchCategories();   
     }
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.user !== this.props.user) this.props.fetchCategories();
-      }
+    // componentWillReceiveProps(nextProps) {
+    //     if(nextProps.user !== this.props.user) this.props.fetchCategories();
+    // }
   
     state = {
         wasWheelSpinned: true,

@@ -4,9 +4,10 @@ import {
     LOGIN_USER_SUCCESS, 
     LOGIN_USER_FAIL,
     LOGIN_USER,
-    LOGOUT_USER_SUCCESS 
+    LOGOUT_USER_SUCCESS,
+    REPEAT_PASSWORD_CHANGED
 }   from '../actions/types'; /*czesty blad - przy importcie niewlasciwej zmiennej nie wyswietla sie blad*/
-const INITIAL_STATE = { email: '', password: '', user: null, error: '', loading: false};
+const INITIAL_STATE = { email: '', password: '', repeatPassword: '', user: null, error: '', loading: false};
 
 export default (state = INITIAL_STATE, action) => {
     console.log(action);
@@ -17,6 +18,9 @@ export default (state = INITIAL_STATE, action) => {
 
         case PASSWORD_CHANGED:
             return { ...state, password: action.payload };  
+        
+        case REPEAT_PASSWORD_CHANGED:
+            return { ...state, repeatPassword: action.payload };      
 
         case LOGIN_USER: 
             return { ...state, loading: true, error: ''};
@@ -24,17 +28,15 @@ export default (state = INITIAL_STATE, action) => {
         case LOGIN_USER_SUCCESS:
          
             return { ...state, ...INITIAL_STATE, user: action.payload };
-            //console.log( 'succes', state.error );
 
         case LOGIN_USER_FAIL:
             
-            return { ...state, error: 'authentication failed', loading: false };    
-            //console.log( 'fail',state.error );
+            return { ...state, error: 'authentication failed', loading: false };   
 
         case LOGOUT_USER_SUCCESS:
             
             return { ...state, ...INITIAL_STATE };    
-            //console.log( 'fail',state.error );    
+
         default:
             return state;
     }
