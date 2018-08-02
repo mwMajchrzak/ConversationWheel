@@ -12,15 +12,15 @@ class Game extends Component {
 
     componentWillMount() {
         this.props.fetchCustomCategories();
-        //console.log('useer game', this.props.user);
-        if(this.props.user != null) this.props.fetchCategories();   
-        console.log('props customCategories', this.props.customCategories);
-        console.log('props Categories', this.props.userCategories);
+        //console.log('willmount', this.props.user);
+        //if(this.props.user != null) this.props.fetchCategories();   
     }
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.user !== this.props.user) this.props.fetchCategories();
+      }
   
     state = {
         wasWheelSpinned: true,
-        topic:'tomato',
         isMenuOpen: 'false',
     }
 
@@ -37,14 +37,14 @@ class Game extends Component {
     onCreateButtonPress = () => this.props.navigation.navigate('createCategory');
 
     toggleMenu = ()  => {
-            const currentState = this.state.isMenuOpen
-            this.setState({ isMenuOpen: !currentState});   
+        const currentState = this.state.isMenuOpen
+        this.setState({ isMenuOpen: !currentState});   
     };
 
     passOnPressEvent = () => {
         const { navigation, user, logoutUser } = this.props
         return (user != null) ? logoutUser() : navigation.navigate('LogInForm')
-    }
+    };
 
     render() {
         return (
@@ -56,7 +56,6 @@ class Game extends Component {
                 <HeaderSection text={this.renderHeaderText()}/>
                 <CategoryMenu 
                     onCreateButtonPress={this.onCreateButtonPress}
-                    categoriesObject={this.props.customCategories}
                     isMenuOpen={this.state.isMenuOpen}
                     toggleMenu={this.toggleMenu}/>
                 <Wheel />
@@ -65,23 +64,12 @@ class Game extends Component {
         );
     };
 };
-
 const styles = {
     IconMenuStyle: {
         margin: 1
     }
 }
 
-const mapStateToProps = state =>   {
-    console.log('mapstate to props state', state.cat.userCategories);
-    return {
-        email: state.auth.email,
-        password: state.auth.password,
-        error: state.auth.error,
-        loading: state.auth.loading,
-        user: state.auth.user,
-        customCategories: state.cat.customCategories,
-        userCategories: state.cat.userCategories
-    };
-};
+const mapStateToProps = state => { return { user: state.auth.user } };
+
 export default connect(mapStateToProps, { logoutUser, fetchCustomCategories, fetchCategories })(Game);

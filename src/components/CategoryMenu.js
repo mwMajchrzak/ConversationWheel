@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Feather';
 class CategoryMenu extends Component {
 
     state = {
-            category: 'Select Category', 
+        category: 'Select Category', 
     }
 
     updateCategory = (category) => {
@@ -42,15 +42,12 @@ class CategoryMenu extends Component {
 
  
     showMenu = () => {
-        
         if (this.props.isMenuOpen === true ) {
             return (
                 <View style={styles.containerCategoriesList}>
                     <CategoriesList 
                         updateCategory={this.updateCategory} 
-                        categories={this.state.categories}
                         selectedCategory={this.state.category}
-                        categoriesObject={this.props.categoriesObject}
                     />
                     {this.createButton()}
                 </View>
@@ -61,17 +58,15 @@ class CategoryMenu extends Component {
 
     render() {
         
-        
         return (
-        <View style={styles.containerCategoryMenu} >
-                <SelectedCategory  
-                    isMenuOpen={this.props.isMenuOpen} 
-                    onPress={this.props.toggleMenu}  
-                    selectedValue={this.state.category}
-                />
-                {this.showMenu()}
-            
-         </View>
+            <View style={styles.containerCategoryMenu} >
+                    <SelectedCategory  
+                        isMenuOpen={this.props.isMenuOpen} 
+                        onPress={this.props.toggleMenu}  
+                        selectedValue={this.state.category}
+                    />
+                    {this.showMenu()}
+            </View>
         )
     }
 }
@@ -118,178 +113,3 @@ const styles = {
     
 }
 export default CategoryMenu;
-
-
-
-
-
-// import React, { Component } from 'react';
-// import {  AppRegistry, Text, Picker, View, StyleSheet } from 'react-native';
-// 
-
-
-
-// class Category extends Component {
-//     state = { 
-//         category:''
-//     }
-
-//     updateCategory= (category) => {
-//        this.setState({ category: category })
-//     }
-
-
-//   _getOptionList() {
-//     return this.refs['OPTIONLIST'];
-//   }
-
-//     render() {
-//         return (
-//         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//             <Select
-//               width={250}
-//               ref="SELECT1"
-//               optionListRef={this._getOptionList.bind(this)}
-//               defaultValue="Select a Province in Canada ..."
-//               onSelect={this.updateCategory.bind(this)}>
-//               <Option value = {{id : "alberta"}}>Alberta</Option>
-//               <Option>British Columbia</Option>
-//               <Option>Manitoba</Option>
-//               <Option>New Brunswick</Option>
-//               <Option>Newfoundland and Labrador</Option>
-//               <Option>Northwest Territories</Option>
-//               <Option>Nova Scotia</Option>
-//               <Option>Nunavut</Option>
-//               <Option>Ontario</Option>
-//               <Option>Prince Edward Island</Option>
-//               <Option>Quebec</Option>
-//               <Option>Saskatchewan</Option>
-//               <Option>Yukon</Option>
-//             </Select>
-  
-//             <Text>Selected Canada's province: {this.state.canada}</Text>
-            
-//             <OptionList ref="OPTIONLIST"/>
-//         </View>
-//         )
-//     }
-// };
-// export default Category;
-
-
-
-// import React, { Component } from 'react';
-// import {  AppRegistry, Text, Picker, View, StyleSheet } from 'react-native';
-// import DropdownMenu from 'react-native-dropdown-menu';
-
-// class Category extends Component {
- 
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       text: ''
-//     };
-//   }
-  
-//   render() {
-//     var data = [["C", "Java", "JavaScript", "PHP"], ["Python", "Ruby"], ["Swift", "Objective-C"]];
-//     return (
-//       <View style={{flex: 1}}>
-//         <View style={{height: 64}} />
-//         <DropdownMenu
-//           style={{flex: 1}}
-//           bgColor={'white'}
-//           tintColor={'#666666'}
-//           activityTintColor={'green'}
-//           // arrowImg={}      
-//           // checkImage={}   
-//           // optionTextStyle={{color: '#333333'}}
-//           // titleStyle={{color: '#333333'}} 
-//           // maxHeight={300} 
-//           handler={(selection, row) => this.setState({text: data[selection][row]})}
-//           data={data}
-//         >
- 
-//           <View style={{flex: 1}}>
-//             <Text>
-//               {this.state.text} is the best language in the world
-//             </Text>
-//           </View>
- 
-//         </DropdownMenu>
-//       </View>
-//     );
-//   };
-// }  
-
-//   export default Category;
-
-
-
-
-
-
-
-// import React, { Component } from 'react';
-// import {Select, Option} from "react-native-chooser";
- 
-// import {
-//   AppRegistry,
-//   StyleSheet,
-//   Text,
-//   View
-// } from 'react-native';
- 
-// class Category extends Component {
- 
-//   constructor(props) {
-//     super(props);
-//     this.state = {value : "Select Category"}
-//   }
-//   onSelect(value, label) {
-//     this.setState({value : value});
-//   }
- 
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//         <Select 
-//             onSelect = {this.onSelect.bind(this)}
-//             defaultText  = {this.state.value}
-//             style = {styles.selectedCategoryStyle}
-//             textStyle = {{}}
-//             //backdropStyle  = {{backgroundColor : "#d3d5d6"}}
-//            // optionListStyle = {{backgroundColor : "#F5FCFF"}}
-//           >
-//           <Option value = {{name : "azhar"}}>Azhar</Option>
-//           <Option value = "johnceena">Johnceena</Option>
-//           <Option value = "undertaker">Undertaker</Option>
-//           <Option value = "Daniel">Daniel</Option>
-//           <Option value = "Roman">Roman</Option>
-//           <Option value = "Stonecold">Stonecold</Option>
- 
-//         </Select>
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = {
-//     selctedCategoryStyle: {
-//         borderWidth : 1,
-//         borderColor : "green",
-//         width: 300,
-//         flex: 1,
-       
-        
-//       },
-
-//       container: {
-//           backgroundColor: 'gray',
-//           flex: 1,
-//           alignItems: 'center',
-//           justifyContent: 'space-around'
-//       }
-// }
-
-// export default Category;

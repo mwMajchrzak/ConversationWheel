@@ -69,6 +69,15 @@ class LoginForm extends Component {
                     </View>
                     
                 </TopBar>
+                <CardSection> 
+                     <Input 
+                     label={true}
+                     labelName="User Name"
+                     placeholder="David"
+                     onChangeText={this.onEmailChange.bind(this)}
+                     value={this.props.email}
+                     />
+                 </CardSection>
                  <CardSection> 
                      <Input 
                      label={true}
@@ -83,11 +92,21 @@ class LoginForm extends Component {
                      label={true}
                      secureTextEntry
                      labelName="Password"
-                     placeholder="password"
+                     placeholder="enter password"
                      onChangeText={this.onPasswordChange.bind(this)}
                      value={this.props.password}    
-                 />
-             </CardSection>
+                    />
+                </CardSection>
+                <CardSection> 
+                     <Input 
+                     label={true}
+                     secureTextEntry
+                     labelName="Password"
+                     placeholder="repeat password"
+                     onChangeText={this.onPasswordChange.bind(this)}
+                     value={this.props.password}    
+                    />
+                </CardSection>
              { this.renderError() }
              <CardSection> 
                 {this.renderButton()}

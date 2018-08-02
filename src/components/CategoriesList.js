@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import ListItem from './ListItem';
+import  { connect } from 'react-redux'
 
-export default class CategoriesList extends Component {
+class CategoriesList extends Component {
     
     createListOfCategories = () => {
-        const categoriesList = this.props.categoriesObject.map((object) => {
+
+        const { userCategories, customCategories } = this.props.categories
+        list = () => { 
+            return ((userCategories == '') ? customCategories : userCategories.concat(customCategories));
+        }
+        return list().map((object) => {
             return ({ category: object.category, key: object.category });
-        });  
-        return categoriesList;      
+        });
     }
 
     render() {
+     
         return (
             <FlatList style={styles.flatList }
                 data={this.createListOfCategories()}
@@ -35,3 +41,7 @@ const styles= {
         margin: 0
     }
 }
+
+const mapStateToProps = state => { return { categories: state.cat } };
+
+export default connect(mapStateToProps, {})(CategoriesList);

@@ -49,7 +49,7 @@ export const fetchCategories = () => {
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/categories`)
             .on('value', snapshot =>  {
-                dispatch({ type: CATEGORIES_FETCH_SUCCESS, payload: snapshot.val() });
+                dispatch({ type: CATEGORIES_FETCH_SUCCESS, payload: Object.values(snapshot.val()) });
 
             });
     };
