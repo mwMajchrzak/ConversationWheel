@@ -2,20 +2,17 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
+const CircleButton = ({ onPress, icon, color }) => {
 
-
-const CircleButton = ({ onPress }) => {
-
-
-    const { CircleButtonStyle, textStyle } = styles;
+    const { circleButtonStyle, textStyle } = styles;
 
     return (
-        <TouchableOpacity onPress={onPress} style={CircleButtonStyle}>
+        <TouchableOpacity onPress={onPress} style={[circleButtonStyle, { backgroundColor: color }]}>
                 <Icon 
-                style={styles.IconPlusStyle} 
-                type="Feather" name="plus"  
-                size={30} 
-                color={'#ffffff'}
+                    style={styles.IconPlusStyle} 
+                    type="Feather" name={icon}
+                    size={25} 
+                    color={'#ffffff'}
                 />
         </TouchableOpacity>    
     );
@@ -26,10 +23,9 @@ const styles = {
         alignSelf: 'center',
         color: '6699ff',
     },
-    CircleButtonStyle: {
+    circleButtonStyle: {
         width: 50,
         height: 50,
-        //alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#6699ff',

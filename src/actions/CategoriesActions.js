@@ -54,3 +54,15 @@ export const fetchCategories = () => {
             });
     };
 };
+
+export const categoryDelete = ({ uid }, clickedCategory) => {
+    const { currentUser } = firebase.auth();
+
+    console.log('blabla', uid);
+    console.log('blabla', clickedCategory);
+
+    return(dispatch) => {
+        firebase.database().ref(`/users/${currentUser.uid}/categories/${uid}`)
+        .remove()
+    };
+};

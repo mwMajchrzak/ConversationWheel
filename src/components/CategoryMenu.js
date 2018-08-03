@@ -1,5 +1,5 @@
 import React, { Component, componentWillMount } from 'react';
-import {  Text,  View, TouchableOpacity, Button, Navigator } from 'react-native';
+import {  Text,  View, TouchableOpacity, Button, Navigator, TouchableWithoutFeedback } from 'react-native';
 import SelectedCategory from './SelectedCategory';
 import CategoriesList from './CategoriesList';
 import Icon from 'react-native-vector-icons/Feather';
@@ -16,11 +16,9 @@ class CategoryMenu extends Component {
        this.props.toggleMenu();
     };
 
-    onButtonPress = () => {
-        console.log('tuuuuuu', this.props)
-        // const { navigate } = this.props.navigation;
-        // return navigate('LogInForm')
-    } 
+    handlePress() {
+        return this.props.updateCategory(this.props.category);     
+     };
 
     createButton() {
         return (
@@ -45,13 +43,14 @@ class CategoryMenu extends Component {
         if (this.props.isMenuOpen === true ) {
             return (
                 <View style={styles.containerCategoriesList}>
-                    <CategoriesList 
-                        updateCategory={this.updateCategory} 
-                        selectedCategory={this.state.category}
-                    />
+                    <View style={styles.container}>
+                        <CategoriesList 
+                            onItemPress={this.updateCategory} 
+                            selectedCategory={this.state.category}
+                        />
+                    </View>   
                     {this.createButton()}
                 </View>
-        
             )    
         }
     }    
@@ -59,14 +58,15 @@ class CategoryMenu extends Component {
     render() {
         
         return (
-            <View style={styles.containerCategoryMenu} >
-                    <SelectedCategory  
-                        isMenuOpen={this.props.isMenuOpen} 
-                        onPress={this.props.toggleMenu}  
-                        selectedValue={this.state.category}
-                    />
-                    {this.showMenu()}
-            </View>
+                <View style={styles.containerCategoryMenu} >
+                        <SelectedCategory  
+                            isMenuOpen={this.props.isMenuOpen} 
+                            onPress={this.props.toggleMenu}  
+                            selectedValue={this.state.category}
+                        />
+                        {this.showMenu()}
+                </View>
+
         )
     }
 }
@@ -80,15 +80,23 @@ const styles = {
         justifyContent: 'center',
         borderWidth: 1,
         borderColor: 'grey',
-        zIndex: 60
-        
+        zIndex: 60,
         
     },
     containerCategoriesList: {
         alignSelf: 'center',
         width: '100%',
         padding: 0,
-        margin: 0
+        margin: 0,
+     
+    },
+    container: {
+        alignSelf: 'center',
+        width: '100%',
+        padding: 0,
+        margin: 0,
+        maxHeight: 210
+     
     },
     containerCreateButton: {
         margin: 0,
@@ -100,7 +108,7 @@ const styles = {
         height: 50,
     },
     textStyle: {
-        alignSelf: 'center',
+        alignSelf: '',
         fontSize: 17
     },
     IconCircleStyle: {

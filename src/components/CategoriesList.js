@@ -7,7 +7,7 @@ class CategoriesList extends Component {
     
     createListOfCategories = () => {
 
-        const { userCategories, customCategories } = this.props.categories
+        const { customCategories, userCategories} = this.props.categories
         list = () => { 
             return ((userCategories == '') ? customCategories : userCategories.concat(customCategories));
         }
@@ -19,13 +19,15 @@ class CategoriesList extends Component {
     render() {
      
         return (
-            <FlatList style={styles.flatList }
+            <FlatList
                 data={this.createListOfCategories()}
                 renderItem={({ item }) => 
                     <ListItem 
-                        updateCategory={this.props.updateCategory} 
+                        textStyle={this.props.textStyle}
+                        onItemPress={this.props.onItemPress} 
                         category={item.category}
                         selectedCategory={this.props.selectedCategory}
+                        clickedCategory={this.props.clickedCategory}
                     />     
                 }
             />
@@ -33,14 +35,6 @@ class CategoriesList extends Component {
     }
 };
  
-const styles= {
-    flatList: {
-        alignSelf: 'center',
-        width: '100%',
-        padding: 0,
-        margin: 0
-    }
-}
 
 const mapStateToProps = state => { return { categories: state.cat } };
 

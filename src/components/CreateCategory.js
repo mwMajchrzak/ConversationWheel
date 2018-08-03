@@ -46,7 +46,7 @@ class CreateCategory extends Component {
     }
     renderTopicButton() {
         return (
-                <CircleButton onPress={this.onTopicButtonPress.bind(this)}> 
+                <CircleButton icon="plus" color="#6699ff" onPress={this.onTopicButtonPress.bind(this)}> 
                 </CircleButton>
          );
     }

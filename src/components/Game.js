@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Button } from 'react-native';
+import React, { Component, forceUpdate } from 'react';
+import { View, Button, TouchableWithoutFeedback } from 'react-native';
 import  { connect } from 'react-redux'
 
 import { Wrapper, LogInButton, TopBar, MenuIcon } from  './common';
@@ -12,34 +12,30 @@ class Game extends Component {
 
     componentWillMount() {
         this.props.fetchCustomCategories();
-        //console.log('willmount', this.props.user);
         if(this.props.user != null) this.props.fetchCategories();   
     }
-    // componentWillReceiveProps(nextProps) {
-    //     if(nextProps.user !== this.props.user) this.props.fetchCategories();
-    // }
-  
-    state = {
-        wasWheelSpinned: true,
-        isMenuOpen: 'false',
+    componentWillReceiveProps(nextProps) {
+        
+        if(nextProps.user != null) { return( this.props.fetchCategories()) }
+        //if( nextProps.user = 'null') { return( this.setState({ state: this.state})) }
     }
+  
+    state = { wasWheelSpinned: false, isMenuOpen: false, topic:'' }
 
     renderHeaderText() {
         const { wasWheelSpinned, topic } = this.state
         return (wasWheelSpinned ? `Let's talk about ${topic}` : "Spin the wheel and find a random topic!");
     }
-    renderLogInButtonText() {
-        return (this.props.user != null) ? 'LogOut' : 'LogIn';
-    }
+    
+    renderLogInButtonText() { return (this.props.user != null) ? 'LogOut' : 'LogIn'}
 
     onMenuIconPress = () => this.props.navigation.openDrawer();
 
     onCreateButtonPress = () => this.props.navigation.navigate('createCategory');
 
-    toggleMenu = ()  => {
-        const currentState = this.state.isMenuOpen
-        this.setState({ isMenuOpen: !currentState});   
-    };
+    closeMenu = () => this.setState({ isMenuOpen: false});    
+
+    toggleMenu = ()  => this.setState({ isMenuOpen: !this.state.isMenuOpen});   
 
     passOnPressEvent = () => {
         const { navigation, user, logoutUser } = this.props
@@ -48,27 +44,27 @@ class Game extends Component {
 
     render() {
         return (
-            <Wrapper> 
-                <TopBar> 
-                    <MenuIcon onIconPress={this.onMenuIconPress}/>
-                    <LogInButton onPressEvent={this.passOnPressEvent}> {this.renderLogInButtonText()} </LogInButton>
-                </TopBar>
-                <HeaderSection text={this.renderHeaderText()}/>
-                <CategoryMenu 
-                    onCreateButtonPress={this.onCreateButtonPress}
-                    isMenuOpen={this.state.isMenuOpen}
-                    toggleMenu={this.toggleMenu}/>
-                <Wheel />
-            </Wrapper>
-            
+            <TouchableWithoutFeedback onPress={this.closeMenu}>
+                <View style={{ flex: 1}}>
+                    <Wrapper> 
+                        <TopBar> 
+                            <MenuIcon onIconPress={this.onMenuIconPress}/>
+                            <LogInButton onPressEvent={this.passOnPressEvent}> {this.renderLogInButtonText()} </LogInButton>
+                        </TopBar>
+                        <HeaderSection text={this.renderHeaderText()}/>
+                        <CategoryMenu 
+                            onCreateButtonPress={this.onCreateButtonPress}
+                            isMenuOpen={this.state.isMenuOpen}
+                            toggleMenu={this.toggleMenu}
+                        />
+                        <Wheel />
+                    </Wrapper>
+                </View>
+            </TouchableWithoutFeedback>
         );
     };
 };
-const styles = {
-    IconMenuStyle: {
-        margin: 1
-    }
-}
+
 
 const mapStateToProps = state => { return { user: state.auth.user } };
 
