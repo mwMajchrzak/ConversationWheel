@@ -1,6 +1,6 @@
 import React, { Component, componentDidUpdate } from 'react';
 import  { connect } from 'react-redux'
-import { repeatPasswordChanged, emailChanged, passwordChanged, loginUser } from '../actions';
+import { signupUser, repeatPasswordChanged, emailChanged, passwordChanged, loginUser } from '../actions';
 import { CardSection, Input, Button, Spinner } from './common';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { GoBackIcon, TopBar, Wrapper } from './common'; 
@@ -29,12 +29,19 @@ class LoginForm extends Component {
     }
     onSignUpPress() {
         console.log('sign up press')
-        // const { email, password, passwordRepeat } = this.props;
-        // this.props.signupUser({ email, password, passwordRepeat });
+        const { email, password, repeatPassword} = this.props;
+        this.props.signupUser({ email, password, repeatPassword })
+  
+
+
+
+        
     }
 
     componentDidUpdate(prevProps) { 
+        //console.log( user);
         const { user, navigation } = this.props
+        console.log( user);
         return (prevProps.user != user) ? navigation.navigate('drawerStack') : null
     };
 
@@ -179,5 +186,6 @@ export default connect(mapStateToProps, {
     repeatPasswordChanged, 
     emailChanged, 
     passwordChanged, 
-    loginUser 
+    loginUser,
+    signupUser
 })(LoginForm);

@@ -37,8 +37,10 @@ const DrawerStack = DrawerNavigator({
                 <Icon  
                 type="Ionicons" name="ios-list-box-outline"  
                 size={25}
-                onPress={() => closeDrawer()}/>
-            )
+                onPress={() => closeDrawer()}
+               />
+            ),
+
         }
     },
     Friends: { 

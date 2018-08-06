@@ -1,6 +1,6 @@
 
 import firebase from 'firebase';
-import { REPEAT_PASSWORD_CHANGED, EMAIL_CHANGED, SIGNUP_USER, LOGOUT_USER_SUCCESS, PASSWORD_CHANGED, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER } from './types';
+import {  REPEAT_PASSWORD_CHANGED, EMAIL_CHANGED, SIGNUP_USER, LOGOUT_USER_SUCCESS, PASSWORD_CHANGED, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER } from './types';
 import ReduxThunk from 'redux-thunk';
 
 export const emailChanged = (text) => {
@@ -23,15 +23,19 @@ export const repeatPasswordChanged = (text) => {
     };
 };
 
-// export const signupUser = ({ email, password }) => {
-//     return (dispatch) => {
-//     dispatch({ type: LOGIN_USER });  
-
-//         firebase.auth().createUserWithEmailAndPassword(email, password)
-//             .then(user => loginUserSuccess(dispatch, user))
-//             .catch(() => loginUserFail(dispatch));
-//     };
-// };
+export const signupUser = ({ email, password, repeatPassword }) => {
+    if( password = repeatPassword ) {
+    return (dispatch) => {
+    dispatch({ type: LOGIN_USER });  
+    
+        return firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(user => loginUserSuccess(dispatch, user))
+            .catch(() => loginUserFail(dispatch));
+    }        
+ 
+    };
+    return (dispatch) => loginUserFail(dispatch);
+};
 
 
 export const loginUser = ({ email, password }) => {
@@ -40,16 +44,11 @@ export const loginUser = ({ email, password }) => {
 
     firebase.auth().signInWithEmailAndPassword(email, password) 
         .then(user => loginUserSuccess(dispatch, user))
-        .catch(() => {
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then(user => loginUserSuccess(dispatch, user))
-                .catch(() => loginUserFail(dispatch));
-                
-                
+        .catch(() => loginUserFail(dispatch));
+     
 
-        })
+        };
     };
-};
 export const logoutUser = () => {
     return (dispatch) => {
     firebase.auth().signOut()

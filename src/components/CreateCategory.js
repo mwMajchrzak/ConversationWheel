@@ -1,11 +1,12 @@
 import React, { Component, componentDidUpdate } from 'react';
 import  { connect } from 'react-redux'
 import { categoryCreate, saveTopic, topicChanged, categoryChanged } from '../actions';
-import { Card, CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper  } from './common';
+import { Card, CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper, Messeage  } from './common';
 import { Text, View, FlatList } from 'react-native';
 import TopicsList from './TopicsList'
 
 class CreateCategory extends Component {
+ 
     
     onBackIconPress = () => this.props.navigation.navigate('drawerStack');
 
@@ -21,10 +22,7 @@ class CreateCategory extends Component {
         this.props.saveTopic(this.props.topic);
     }
 
-
-
     onCategoryButtonPress() {
-
         if (this.props.user != null) {
 
             const { topics, category} = this.props;
@@ -34,20 +32,23 @@ class CreateCategory extends Component {
         return console.log( 'you can not create category')
     }
 
-
-
-
     renderCategoryButton = () => {
         return (
-                <Button onPress={this.onCategoryButtonPress.bind(this)}> 
-                    addCategory
-                </Button>
+            <Button onPress={this.onCategoryButtonPress.bind(this)}> 
+                addCategory
+            </Button>
          );
     }
-    renderTopicButton() {
+
+    
+
+    renderTopicButton = () => {
         return (
-                <CircleButton icon="plus" color="#6699ff" onPress={this.onTopicButtonPress.bind(this)}> 
-                </CircleButton>
+            <CircleButton 
+            isDisabled={this.props.topic == ''} 
+            icon="plus" color="#6699ff" 
+            onPress={this.onTopicButtonPress.bind(this)} 
+            /> 
          );
     }
 
@@ -68,17 +69,13 @@ class CreateCategory extends Component {
                         value={this.props.category}
                         />
                     </View>
-                    
                     <CardSection style={{ marginTop: 15, borderBottomWidth: 0 }}>
                         <Text style={styles.topicText}>Your topics</Text>
-                    </CardSection> 
-
+                    </CardSection>
                      <CardSection style={{ borderBottomWidth: 0, marginBottom:0, paddingBottom: 0}}>
                         <TopicsList topics={this.props.topics} />
                     </CardSection>
-                    
-                    <View style={styles.viewSecitonRow} > 
-                       
+                    <View style={styles.viewSecitonRow}> 
                         <Input 
                         inputPropsStyle={{ marginTop: 15 }}
                         label={false}
@@ -88,15 +85,12 @@ class CreateCategory extends Component {
                         value={this.props.topic}    
                         />
                         {this.renderTopicButton()}
-
                     </View>
-                    
-
-                   
                 </View>
                 <CardSection style={{flex: 1, borderBottomWidth: 0, padding: 20}}>
                         {this.renderCategoryButton()}
-                </CardSection>    
+                </CardSection>   
+           
              </Wrapper>
         )
     }

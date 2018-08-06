@@ -12,39 +12,24 @@ class ListItem extends Component {
         return <View style = {styles.lineStyle} />
     };
 
-    asignStyle = () => { 
-        const { category, clickedCategory } = this.props
-        return category == clickedCategory ? {backgroundColor: '#cccccc'} : null 
-    }
-
     render() {
-
-        const isCategorySame = this.props.category == this.props.selectedCategory;
-        const isCategoryClicked = this.props.category == this.props.clickedCategory;
-     
-        if (!(isCategorySame)) {
-            return (
-                <View >
-                     <TouchableOpacity 
-                        style={[styles.container, this.asignStyle() ]}
-                        onPress={() => {this.handlePress()}}
-                        disabled={isCategoryClicked}
-                    >
-                        <Text style={[styles.textStyle, this.props.textStyle]}>
-                            {this.props.category}
-
-                        </Text>
-                      
-                    </TouchableOpacity>
-                    {this.renderSeparator()}
-                    
-                </View>    
-            )
-        }
-
-        return null;
+        return (
+            <View>
+                 <TouchableOpacity 
+                    style={[ styles.container, this.props.style ]}
+                    onPress={() => {this.handlePress()}}
+                    disabled={this.props.disabled}
+                >
+                    <Text style={[styles.textStyle, this.props.textStyle]}>
+                        {this.props.category}
+                    </Text>
+                </TouchableOpacity>
+                {this.renderSeparator()}
+            </View>    
+        )    
     }
 };
+
 const styles = {
     container: {
         alignSelf: 'center',
