@@ -8,10 +8,12 @@ class ListItem extends Component {
         return this.props.onItemPress(this.props.category);     
      };
 
-     renderSeparator() {
-        return <View style = {styles.lineStyle} />
-    };
+    renderSeparator = () => { return this.props.separator != null ? <View style = {styles.lineStyle} /> : null }
 
+    renderTopics = () => { 
+        const { topics, topicsStyle } = this.props
+        return topics != null ? <Text style={topicsStyle}>{topics.length}</Text> : null  
+    }        
     render() {
         return (
             <View>
@@ -23,8 +25,10 @@ class ListItem extends Component {
                     <Text style={[styles.textStyle, this.props.textStyle]}>
                         {this.props.category}
                     </Text>
+                    {this.renderTopics()}
                 </TouchableOpacity>
                 {this.renderSeparator()}
+
             </View>    
         )    
     }
@@ -33,22 +37,21 @@ class ListItem extends Component {
 const styles = {
     container: {
         alignSelf: 'center',
-        justifyContent: 'center',
+        //justifyContent: 'center',
         width: '100%',
         height: 50,
     
     },
     textStyle: {
-        alignSelf: 'center',
-        fontSize: 17,
+        //alignSelf: 'center',
+        fontSize: 18,
     },
     lineStyle:{
-        margin: 0,
-        padding: 0,
         borderWidth: 0.5,
         borderColor:'grey',
         margin: 0,
         opacity: 0.5
-    }
+    },
+
 }
 export default ListItem;

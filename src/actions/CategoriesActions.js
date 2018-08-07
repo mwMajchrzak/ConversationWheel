@@ -54,8 +54,11 @@ export const fetchCategories = () => {
                 if (snapshot.val() !== null)  { 
 
                     const data =  Object.values(snapshot.val())  
+                    console.log( data )
                     const arrays = data.map( e => Object.values(e))
+                    console.log( arrays )
                     const merged = [].concat.apply([], arrays);
+                    console.log( merged )
 
                     return dispatch({ type: CATEGORIES_FETCH_SUCCESS, payload: merged }); 
                 

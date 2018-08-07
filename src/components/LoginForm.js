@@ -11,7 +11,11 @@ class LoginForm extends Component {
     }
     togglePages = ()  => this.setState({ SignUpPage: !this.state.SignUpPage });
     
-    onBackIconPress = () => this.props.navigation.navigate('drawerStack');
+    onBackIconPress = () =>   { 
+        const { goBack, state } = this.props.navigation
+        goBack(null)
+        if( state.params != null ) { state.params.updateData({ showModal: true }) }
+    }
 
     onEmailChange(text) {
         this.props.emailChanged(text);
@@ -35,7 +39,7 @@ class LoginForm extends Component {
 
 
 
-        
+     
     }
 
     componentDidUpdate(prevProps) { 
@@ -63,16 +67,24 @@ class LoginForm extends Component {
         }
         else if(this.state.SignUpPage) { 
             return (
-                <Button onPress={this.onSignUpPress.bind(this)}> 
-                    Sign Up
-                </Button>
+                <Button 
+                    onPress={this.onSignUpPress.bind(this)} 
+                    style={styles.buttonStyle} 
+                    buttonTextStyle={styles.buttonTextStyle}
+                >
+                    Sign Up 
+                </Button>   
+              
             );
         }
         return (
-            <Button onPress={this.onLogInPress.bind(this)}> 
-                Log In
-            </Button>
-            
+            <Button 
+                onPress={this.onSignUpPress.bind(this)} 
+                style={styles.buttonStyle} 
+                buttonTextStyle={styles.buttonTextStyle}
+            >
+            Log In
+            </Button>  
         )
     }
     renderHeader = () => {
@@ -102,7 +114,7 @@ class LoginForm extends Component {
     renderReapetPassword() {
         if(this.state.SignUpPage) { 
             return (
-                <CardSection> 
+                <CardSection style={styles.inputStyle}> 
                     <Input 
                         label={false}
                         secureTextEntry
@@ -123,26 +135,28 @@ class LoginForm extends Component {
                     
                 </TopBar>
                 {this.renderHeader()}
-                <CardSection> 
-                    <Input 
-                        label={false}
-                        placeholder="Email"
-                        onChangeText={this.onEmailChange.bind(this)}
-                        value={this.props.email}
-                    />
-                </CardSection>
-                <CardSection> 
-                    <Input 
-                        label={false}
-                        secureTextEntry
-                        placeholder="Password"
-                        onChangeText={this.onPasswordChange.bind(this)}
-                        value={this.props.password}    
-                    />
-                </CardSection>
-                {this.renderReapetPassword()}
-                {this.renderError()}
-                <CardSection> 
+                <View style={styles.inputSection}> 
+                    <CardSection style={styles.inputStyle}> 
+                        <Input 
+                            label={false}
+                            placeholder="Email"
+                            onChangeText={this.onEmailChange.bind(this)}
+                            value={this.props.email}
+                        />
+                    </CardSection>
+                    <CardSection style={styles.inputStyle}> 
+                        <Input 
+                            label={false}
+                            secureTextEntry
+                            placeholder="Password"
+                            onChangeText={this.onPasswordChange.bind(this)}
+                            value={this.props.password}    
+                        />
+                    </CardSection>
+                    {this.renderReapetPassword()}
+                    {this.renderError()}
+                </View>
+                <CardSection style={styles.buttonSection} > 
                     {this.renderButton()}
                 </CardSection>
              </Wrapper>
@@ -158,6 +172,7 @@ const styles = {
     headerContainer: {
         alignSelf: 'center',
         flexDirection: 'row',
+        flex: 1,
     },
     currentWindow: {
         fontSize: 20,
@@ -169,7 +184,35 @@ const styles = {
         fontSize: 20,
         padding: 5,
         color: '#1a1a1a'
-    }
+    },
+    inputStyle: {
+        width: '80%',
+        alignSelf: 'center',
+        
+    },
+    buttonStyle: {
+        width: '50%', 
+        height: 40, 
+        flex: 0, 
+        borderWidth: 0, 
+        alignSelf: 'center',
+        margin: 10,
+        borderRadius: 20,
+        backgroundColor: '#0073e6',
+        marginTop: '10%'
+       
+    },
+    buttonSection: {
+        alignSelf: 'center',
+        borderBottomWidth: 0,
+        flex: 2,
+    },
+    buttonTextStyle: {
+        color: '#f2f2f2',
+    },
+    inputSection: {
+       flex: 3,
+    },
 }
 
 const mapStateToProps = state =>   {

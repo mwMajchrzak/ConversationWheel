@@ -26,6 +26,8 @@ class CategoriesList extends Component {
         return listToRender;
     }
 
+   
+
 
     render() {
         
@@ -38,6 +40,7 @@ class CategoriesList extends Component {
                         onItemPress={this.props.onItemPress}
                         isCategorySame = { item.category == this.props.selectedCategory } 
                         category={item.category}
+                        separator={true}
                     />     
                 }
             />
