@@ -8,7 +8,7 @@ const Messeage = ({  children, visible, onAccept, onDecline }) => {
 const { 
     containerStyle, 
     textStyle, 
-    cardSectionStyle, 
+    iconSectionStyle, 
     buttonsSectionStyle, 
     buttonBackStyle, 
     buttonLoginStyle, 
@@ -28,7 +28,7 @@ return (
         >
         <View style={containerStyle}>
             
-                <CardSection style={cardSectionStyle}>
+                <CardSection style={iconSectionStyle}>
                     <Icon 
                         style={styles.IconStyle} 
                         type="Octicons" name="key"
@@ -50,7 +50,7 @@ return (
 };
 
 const styles = {
-    cardSectionStyle: {
+    iconSectionStyle: {
         justifyContent: 'center',
         alignItems: 'center',
         border: 0,
