@@ -7,18 +7,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 class CategoryMenu extends Component {
 
-    state = {
-        category: 'Select Category', 
-    }
-
-    updateCategory = (category) => {
-       this.setState({ category: category })
-       this.props.toggleMenu();
-    };
-
-    handlePress() {
-        return this.props.updateCategory(this.props.category);     
-     };
+  
 
     createButton() {
         return (
@@ -45,8 +34,8 @@ class CategoryMenu extends Component {
                 <View style={styles.containerCategoriesList}>
                     <View style={styles.container}>
                         <CategoriesList 
-                            onItemPress={this.updateCategory} 
-                            selectedCategory={this.state.category}
+                            onItemPress={this.props.onItemPress} 
+                            selectedCategory={this.props.selectedCategory}
                         />
                     </View>   
                     {this.createButton()}
@@ -56,13 +45,13 @@ class CategoryMenu extends Component {
     }    
 
     render() {
-        
+        console.log('this.props.selectedCategory', this.props.selectedCategory)
         return (
                 <View style={styles.containerCategoryMenu} >
                         <SelectedCategory  
                             isMenuOpen={this.props.isMenuOpen} 
                             onPress={this.props.toggleMenu}  
-                            selectedValue={this.state.category}
+                            selectedValue={this.props.selectedCategory}
                         />
                         {this.showMenu()}
                 </View>

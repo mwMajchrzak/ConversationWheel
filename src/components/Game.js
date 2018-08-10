@@ -4,7 +4,7 @@ import  { connect } from 'react-redux'
 
 import { Wrapper, LogInButton, TopBar, MenuIcon } from  './common';
 import HeaderSection from './HeaderSection';
-import Wheel from './Wheel';
+import Pie from './Pie';
 import CategoryMenu from './CategoryMenu';
 import { logoutUser, fetchCustomCategories, fetchCategories } from '../actions';
 
@@ -15,18 +15,27 @@ class Game extends Component {
         if(this.props.user != null) this.props.fetchCategories();   
     }
     componentWillReceiveProps(nextProps) {
-        
         if(nextProps.user != null) { return( this.props.fetchCategories()) }
-        //if( nextProps.user = 'null') { return( this.setState({ state: this.state})) }
     }
   
-    state = { wasWheelSpinned: false, isMenuOpen: false, topic:'' }
+    state = { 
+        wasWheelSpinned: false,
+        isMenuOpen: false,
+        topic:'',
+        category: 'Select Category', 
+        topics: [],
+    }
+
+    updateCategory = (category, topics) => {
+        this.setState({ category: category, topics: topics })
+        this.toggleMenu()
+     };
 
     renderHeaderText() {
         const { wasWheelSpinned, topic } = this.state
         return (wasWheelSpinned ? `Let's talk about ${topic}` : "Spin the wheel and find a random topic!");
     }
-    
+
     renderLogInButtonText() { return (this.props.user != null) ? 'LogOut' : 'LogIn'}
 
     onMenuIconPress = () => this.props.navigation.openDrawer();
@@ -43,6 +52,7 @@ class Game extends Component {
     };
 
     render() {
+        console.log(this.state.topics)
         return (
             <TouchableWithoutFeedback onPress={this.closeMenu}>
                 <View style={{ flex: 1}}>
@@ -53,11 +63,13 @@ class Game extends Component {
                         </TopBar>
                         <HeaderSection text={this.renderHeaderText()}/>
                         <CategoryMenu 
+                            onItemPress={this.updateCategory}
+                            selectedCategory={this.state.category}
                             onCreateButtonPress={this.onCreateButtonPress}
                             isMenuOpen={this.state.isMenuOpen}
                             toggleMenu={this.toggleMenu}
                         />
-                        <Wheel />
+                        <Pie selectedTopics={this.state.topics}/>
                     </Wrapper>
                 </View>
             </TouchableWithoutFeedback>

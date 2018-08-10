@@ -4,33 +4,25 @@ import ListItem from './ListItem';
 import  { connect } from 'react-redux'
 
 class CategoriesList extends Component {
+
+    list = () => { 
+        const { customCategories, userCategories} = this.props.categories    
+        return ((userCategories == '') ? customCategories : userCategories.concat(customCategories));
+    }
     
     createListOfCategories = () => {
-
-        const { customCategories, userCategories} = this.props.categories
-
-        list = () => { 
-            return ((userCategories == '') ? customCategories : userCategories.concat(customCategories));
-        }
-
         const listToRender = [];
-
-        list().forEach((object) => {
-
+        this.list().forEach((object) => {
             if (!( object.category == this.props.selectedCategory)) {
-
-            listToRender.push({ category: object.category, key: object.category });
-
+                listToRender.push({ category: object.category, key: object.category, topics: object.topics });
             }
         });
         return listToRender;
-    }
-
-   
-
+    }    
 
     render() {
-        
+        console.log('list raw data', this.list())
+        console.log('list data', this.createListOfCategories())
         return (
             <FlatList
                 data={this.createListOfCategories()}
@@ -40,6 +32,7 @@ class CategoriesList extends Component {
                         onItemPress={this.props.onItemPress}
                         isCategorySame = { item.category == this.props.selectedCategory } 
                         category={item.category}
+                        topics={item.topics}
                         separator={true}
                     />     
                 }

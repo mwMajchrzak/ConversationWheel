@@ -5,7 +5,7 @@ import { View, Text, Button, TouchableOpacity } from 'react-native';
 class ListItem extends Component {
    
     handlePress() {
-        return this.props.onItemPress(this.props.category);     
+        return this.props.onItemPress(this.props.category, this.props.topics);     
      };
 
     renderSeparator = () => { return this.props.separator != null ? <View style = {styles.lineStyle} /> : null }
