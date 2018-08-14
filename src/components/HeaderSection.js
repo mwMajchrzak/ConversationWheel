@@ -2,12 +2,12 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 
-const HeaderSection = ({ text }) =>  {
+const HeaderSection = ({ text, style }) =>  {
 
     return (
-        <View style={styles.viewSeciton} > 
-            <Text style={styles.questionSeciton}>Bored with small talks?</Text>
-            <Text style={styles.textSeciton}>{text} </Text>
+        <View style={[styles.viewSeciton, style]} > 
+            <Text style={styles.questionSection}>Bored with small talks?</Text>
+            <Text style={styles.textSection}>{text} </Text>
         </View>
 
     );
@@ -15,19 +15,23 @@ const HeaderSection = ({ text }) =>  {
 const styles = {
     viewSeciton: {
         padding: 15,
-        paddingTop: 40,
+        paddingTop: 20,
         flex: 1,
+        margin: 20,
         //backgroundColor: 'red'
     },
 
-    questionSeciton: {
+    questionSection: {
         fontSize: 15,
         padding: 5
     },
 
-    textSeciton: {
-        fontSize: 25,
-        padding: 5
+    textSection: {
+        fontSize: 27,
+        padding: 5,
+        fontFamily: 'Arial', 
+        fontWeight: '400', 
+        fontStyle: 'normal'
     }
 }
 export default HeaderSection;

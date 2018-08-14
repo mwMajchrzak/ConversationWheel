@@ -61,9 +61,9 @@ class CategoryMenu extends Component {
 }
 const styles = {
     containerCategoryMenu: {
-        width: '70%',
+        width: '75%',
         position: 'absolute',
-        top: '35%',
+        top: '40%',
         alignSelf: 'center',
         alignItems: 'space-around',
         justifyContent: 'center',

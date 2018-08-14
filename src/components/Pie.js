@@ -28,8 +28,6 @@ class Pie extends Component {
 
     render() {
        
-        //"#"+((1<<24)*Math.random()|0).toString(16)
-        
         const index = 0
         const w = this.state.width
 
@@ -63,7 +61,7 @@ class Pie extends Component {
 
 const styles = {
     containerStyle: {
-        flex: 1,
+        flex: 7,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',

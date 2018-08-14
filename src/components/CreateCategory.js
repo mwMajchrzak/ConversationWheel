@@ -1,13 +1,16 @@
 import React, { Component, componentDidUpdate } from 'react';
 import  { connect } from 'react-redux'
 import { categoryCreate, saveTopic, topicChanged, categoryChanged } from '../actions';
-import { Card, CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper, Messeage  } from './common';
+import { CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper, Messeage  } from './common';
 import { Text, View, FlatList } from 'react-native';
 import TopicsList from './TopicsList'
 
 class CreateCategory extends Component {
  
-    
+    state = {
+        showModal: this.props.user == null
+    }
+
     onBackIconPress = () => this.props.navigation.navigate('drawerStack');
 
     onCategoryChange(text) {
@@ -19,6 +22,7 @@ class CreateCategory extends Component {
 
     }
     onTopicButtonPress = () => {
+        
         this.props.saveTopic(this.props.topic);
     }
 
@@ -33,15 +37,22 @@ class CreateCategory extends Component {
     }
 
     renderCategoryButton = () => {
+        const { topics, category } = this.props
         return (
-            <Button onPress={this.onCategoryButtonPress.bind(this)}> 
+            <Button isDisabled={(topics == '') || (category == '')} onPress={this.onCategoryButtonPress.bind(this)}> 
                 addCategory
             </Button>
          );
     }
-
+    onAccept = () => {
+        this.setState({ showModal: false });
+        this.props.navigation.navigate('LogInForm', {updateData: this.updateData});
+    }
+    onDecline = () => {
+        this.setState({ showModal: false });
+        this.props.navigation.navigate('Game');    
+    }
     
-
     renderTopicButton = () => {
         return (
             <CircleButton 
@@ -89,7 +100,12 @@ class CreateCategory extends Component {
                 </View>
                 <CardSection style={{flex: 1, borderBottomWidth: 0, padding: 20}}>
                         {this.renderCategoryButton()}
-                </CardSection>   
+                </CardSection>
+                <Messeage 
+                visible={this.state.showModal}
+                onAccept={this.onAccept.bind(this)}
+                onDecline={this.onDecline.bind(this)}
+            />   
            
              </Wrapper>
         )

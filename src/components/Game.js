@@ -61,7 +61,7 @@ class Game extends Component {
                             <MenuIcon onIconPress={this.onMenuIconPress}/>
                             <LogInButton onPressEvent={this.passOnPressEvent}> {this.renderLogInButtonText()} </LogInButton>
                         </TopBar>
-                        <HeaderSection text={this.renderHeaderText()}/>
+                        <HeaderSection style={{flex: 2}} text={this.renderHeaderText()}/>
                         <CategoryMenu 
                             onItemPress={this.updateCategory}
                             selectedCategory={this.state.category}
