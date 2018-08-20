@@ -16,10 +16,11 @@ const styles = {
     containerStyle: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        marginTop:( Platform.OS === 'ios' ) ? 20 : 0,
+    //    / marginTop:( Platform.OS === 'ios' ) ? 20 : 0,
         height: 80,
         alignItems: 'center',
-        padding: 15
+        padding: 15,
+        backgroundColor: '#66b3ff'
 
     } 
     

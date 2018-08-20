@@ -21,8 +21,6 @@ class CategoriesList extends Component {
     }    
 
     render() {
-        console.log('list raw data', this.list())
-        console.log('list data', this.createListOfCategories())
         return (
             <FlatList
                 data={this.createListOfCategories()}

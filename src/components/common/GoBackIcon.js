@@ -9,6 +9,8 @@ class GoBackIcon extends Component  {
                 name="ios-arrow-back-outline"  
                 size={30}
                 onPress={this.props.onIconPress}
+                color='white'
+
             />
         );
     }

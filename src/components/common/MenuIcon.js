@@ -9,6 +9,7 @@ class MenuIcon extends Component  {
                 type="Feather" name="menu"  
                 size={25} 
                 onPress={this.props.onIconPress}
+                color='white'
             />
         );
     }

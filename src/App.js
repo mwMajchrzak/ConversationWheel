@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StatusBar, View, Platform, StyleSheet } from 'react-native';
 import { createStackNavigator, DrawerNavigator, drawerIcon, goBack } from 'react-navigation';
 import Game from './components/Game';
 import ManageCategories from './components/ManageCategories';
@@ -9,7 +8,6 @@ import Settings from './components/Settings';
 import CreateCategory from './components/CreateCategory';
 import LoginForm from './components/LoginForm';
 import Icon from 'react-native-vector-icons/Ionicons';
-//import Icon from 'react-native-vector-icons/Feather';
 import ReduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
@@ -26,7 +24,7 @@ const DrawerStack = DrawerNavigator({
                 type="Ionicons" name="ios-aperture-outline"  
                 size={25}
                 onPress={() => closeDrawer()}/>
-            )
+            ),
         }
     },
     Create: { 
@@ -77,7 +75,10 @@ const logInNavigation = createStackNavigator({
     headerMode: 'none',
     navigationOptions: {
     headerVisible: false,
-    }
+    },
+    cardStyle: {
+        shadowColor: 'transparent',
+    },
 });
 
 const createCategoryNavigation = createStackNavigator({
@@ -86,7 +87,10 @@ const createCategoryNavigation = createStackNavigator({
     headerMode: 'none',
     navigationOptions: {
     headerVisible: false,
-    }
+    },
+    cardStyle: {
+        shadowColor: 'transparent',
+    },
 });
 
 const stackNavigation = createStackNavigator({
@@ -94,8 +98,11 @@ const stackNavigation = createStackNavigator({
 }, {
     headerMode: 'none',
     navigationOptions: {
-      headerVisible: false,
-    }
+    headerVisible: false,
+    },
+    cardStyle: {
+        shadowColor: 'transparent',
+    },
 });
 
 
@@ -110,11 +117,18 @@ const RootStack = createStackNavigator({
      headerMode: 'none',
         navigationOptions: {
         headerVisible: false,
-        }
+    },
+    cardStyle: {
+        shadowColor: 'transparent',
+    },
 });
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
 
-
-
+const MyStatusBar = ({backgroundColor, ...props}) => (
+    <View style={[{ height: STATUSBAR_HEIGHT }, { backgroundColor }]}>
+      <StatusBar  backgroundColor={backgroundColor} {...props} />
+    </View>
+  );
 
 
 
@@ -137,28 +151,18 @@ const RootStack = createStackNavigator({
      render() {
         const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
          return (
+             
          <Provider store={store}>
-            <RootStack />
+            <View style={{flex: 1}}>
+                <MyStatusBar backgroundColor="#66b3ff" barStyle="light-content" />
+                <RootStack />
+            </View>   
          </Provider>
          )   
      }
  }
+ 
 
 
 export default App;
 
-
-
-
-
-
-
-// class App extends Component {
-//     render() {
-//         return (
-//             <Router />
-//         )
-//     }
-// }
-
-// export default App;

@@ -94,7 +94,7 @@ class ManageCategories extends Component {
             <View  style={styles.listSection}>
             {this.renderList()}
             </View>
-            <View style={{alignSelf: 'center', flex: 2}}>
+            <View style={{alignSelf: 'center', flex: 2, width: '50%', maxWidth: 200}}>
                  {this.renderButtons()}
             </View>
             <Messeage 
@@ -124,9 +124,8 @@ const styles = {
     },
    
     buttonsSection: {
-        justifyContent: 'center',
-       alignItems: 'center',
-       flexDirection: 'row'
+        justifyContent: 'space-between',
+       flexDirection: 'row',
     },
     wrapperStyle: {
         backgroundColor: '#f2f2f2',
