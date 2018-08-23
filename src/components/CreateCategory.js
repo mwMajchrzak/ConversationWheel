@@ -80,7 +80,7 @@ class CreateCategory extends Component {
     render() {     
         return (
              <Wrapper> 
-                <TopBar> 
+                <TopBar titleTex="YourCategories"> 
                     <GoBackIcon onIconPress={this.onBackIconPress}/>
                 </TopBar>
                 <View style={styles.formSection}>

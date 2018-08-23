@@ -17,6 +17,10 @@ class Game extends Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.user != null) { return( this.props.fetchCategories()) }
     }
+    static navigationOptions = {
+        title: 'Game',
+        /* No more header config here! */
+      };
   
     state = { 
         wasWheelSpinned: false,
@@ -40,7 +44,7 @@ class Game extends Component {
 
     onMenuIconPress = () => this.props.navigation.openDrawer();
 
-    onCreateButtonPress = () => this.props.navigation.navigate('createCategory');
+    onCreateButtonPress = () => this.props.navigation.navigate('CreateCategory');
 
     closeMenu = () => this.setState({ isMenuOpen: false});    
 
@@ -48,7 +52,7 @@ class Game extends Component {
 
     passOnPressEvent = () => {
         const { navigation, user, logoutUser } = this.props
-        return (user != null) ? logoutUser() : navigation.navigate('LogInForm')
+        return (user != null) ? logoutUser() : navigation.navigate('logIn', {title: 'LOGIN'})
     };
 
     render() {

@@ -15,9 +15,5 @@ class GoBackIcon extends Component  {
         );
     }
 };
-const styles = {
-    IconMenuStyle: {
-        margin: 1
-    }
-}
+
 export { GoBackIcon }

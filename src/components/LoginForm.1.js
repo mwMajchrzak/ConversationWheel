@@ -10,43 +10,13 @@ class LoginForm extends Component {
     state = {
         SignUpPage: false
     }
-
-    componentDidMount() {
-        this.props.navigation.setParams({ onBackIconPress: this._onBackIconPress });
-    }
-
-
-      static navigationOptions = ({ navigation }) => {
-
-        const {state} = navigation;
-        return {
-        title: `${state.params.title}`,
-
-        headerLeft: (
-            <View style={{ paddingLeft: 20, paddingBottom: 15 }}>
-                <GoBackIcon onIconPress={navigation.getParam('onBackIconPress')}/>
-            </View>
-        ),
-        
-    }};
-
-    togglePages = ()  => {
-
-        this.setState({ SignUpPage: !(this.state.SignUpPage) });
-        const {setParams} = this.props.navigation;
-        if (!(this.state.SignUpPage)) {
-            return setParams({ title: 'SIGNUP' }) 
-        }
-        return setParams({ title: 'LOGIN' })
-    }
-
+    togglePages = ()  => this.setState({ SignUpPage: !(this.state.SignUpPage) });
     
-    _onBackIconPress = () =>   { 
+    onBackIconPress = () =>   { 
         const { goBack, state } = this.props.navigation
         goBack(null)
-        //if( state.params != null ) { state.params.updateData({ showModal: true }) }
+        if( state.params != null ) { state.params.updateData({ showModal: true }) }
     }
-    
 
     onEmailChange(text) {
         this.props.emailChanged(text);
@@ -75,13 +45,15 @@ class LoginForm extends Component {
         return (prevProps.user != user) ? navigation.navigate('drawerStack') : null
     };
 
-   renderError() {
+    renderError() {
         
         if (this.props.error) {
             return (
+                <View style={{ backgroundColor: 'white' }}>
                     <Text style={ styles.errorTextStyle }> 
                         {this.props.error}
                     </Text>
+                </View>    
             );
         }
     }
@@ -99,7 +71,7 @@ class LoginForm extends Component {
         if( this.props.loading) {
            return (
             <CardSection style={styles.buttonSection}>
-               <Spinner  size="large"/>
+               <Spinner style={{flex: 2}} size="large"/>
            </CardSection>
            )}
         return (
@@ -114,7 +86,29 @@ class LoginForm extends Component {
         )
     }
 
+    renderHeader = () => {
 
+        const { SignUpPage } = this.state
+        
+        const styleLogIn = () => SignUpPage ? styles.window : styles.currentWindow
+        const styleSignUp = () => SignUpPage ? styles.currentWindow : styles.window
+
+        return (
+            <View style={styles.headerContainer}>
+                <TouchableOpacity disabled={!(SignUpPage)} onPress={this.togglePages}>
+                    <Text style={styleLogIn()}>   
+                       LogIn
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity disabled={SignUpPage} onPress={this.togglePages}>
+                    <Text style={styleSignUp()}>   
+                        SignUp
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
+         );
+    }
 
     renderReapetPassword() {
         if(this.state.SignUpPage) { 
@@ -143,20 +137,24 @@ class LoginForm extends Component {
 
     render() {
         return (
-        
              <Wrapper style={styles.wrapperStyle}> 
-                 <View style={styles.formStyle}> 
-                    <View style={styles.iconSectionStyle}>
-                        <Icon 
+                <TopBar style={{ backgroundColor: '#66b3ff' }}> 
+                    <GoBackIcon onIconPress={this.onBackIconPress}/>
                     
-                            type="Ionicons" name="md-contact"
-                            size={80} 
-                            color={'#ffffff'}
-                        />
-                    </View>
+                </TopBar>
+                <CardSection style={styles.iconSectionStyle}>
+                    <Icon 
+                        style={styles.IconStyle} 
+                        type="Ionicons" name="md-contact"
+                        size={70} 
+                        color={'#ffffff'}
+                    />
+                    {this.renderHeader()}
+                </CardSection>
                 
-                    <View style={styles.inputSection}> 
-                        <View style={styles.inputStyle}> 
+                <View style={styles.inputSection}> 
+                    <View style={styles.lineStyle}>
+                    <CardSection style={styles.inputStyle}> 
                             <Input 
                                 label={false}
                                 placeholder="Email"
@@ -168,104 +166,116 @@ class LoginForm extends Component {
                                 type="Ionicons" name="md-mail"
                                 size={22} 
                                 color={'#c8c8c8'}
-                            />
-                        </View>
-                    
-        
-                        <View style={styles.inputStyle}> 
-                            <Input 
-                                label={false}
-                                secureTextEntry
-                                placeholder="Password"
-                                onChangeText={this.onPasswordChange.bind(this)}
-                                value={this.props.password}    
-                            />
-                            <Icon 
-                                style={styles.IconStyle} 
-                                type="Ionicons" name="md-key"
-                                size={28} 
-                                color={'#c8c8c8'}
-                            />
-                        </View>
-                        {this.renderReapetPassword()}
-                        <View style={{height: 20}}>
-                            {this.renderError()}  
-                        </View>    
+                             />
+                        </CardSection>
+                    </View>
+                    <View style={styles.lineStyle}>
+                        
+                        <CardSection style={styles.inputStyle}> 
+                       
+                        <Input 
+                            label={false}
+                            secureTextEntry
+                            placeholder="Password"
+                            onChangeText={this.onPasswordChange.bind(this)}
+                            value={this.props.password}    
+                        />
+                        <Icon 
+                            style={styles.IconStyle} 
+                            type="Ionicons" name="md-key"
+                            size={28} 
+                            color={'#c8c8c8'}
+                        />
+                        </CardSection>
                     </View>    
-    
-                     
+                    {this.renderReapetPassword()}
+                    {this.renderError()}
                 </View>
-                {this.renderButton()} 
+                {this.renderButton()}
              </Wrapper>
-     
         )
     }
 }
 const styles = {
     wrapperStyle: {
-        flexDirection: 'column',
-      
+        backgroundColor: '#fefefe',
     },
     errorTextStyle: {
         fontSize: 20,
         alignSelf: 'center',
-        color: 'red', 
-        padding: 0,
-        margin: 0,
+        color: 'red'
     },
-
-    inputSection: {
-        minHeight: 160,
-        flex: 4,
-        justifyContent: 'center'
+    headerContainer: {
+        flexDirection: 'row',
     },
-    
+    currentWindow: {
+        fontSize: 17,
+        padding: 5,
+        paddingTop: 20,
+        color: '#ffffff',
+        opacity: 0.9,
+        fontWeight: '600'
+    },
+    window: {
+        opacity: 0.7,
+        fontSize: 17,
+        padding: 5,
+        paddingTop: 20,
+        color: '#ffffff',
+        fontWeight: '600'
+    },
     inputStyle: {
-        width: '76%',
+        width: '92%',
         alignSelf: 'center',
         padding: 17,
+
         backgroundColor: 'white',
+        borderWidth: 0.5,
         height: 55,
         borderRadius: 10,
 
         shadowOffset:{  width: 0,  height: 0 },
+
         shadowRadius: 10,
         shadowColor: '#1a1a1a',
         shadowOpacity: 0.2,
-
-        justifyContent: 'flex-start',
-        flexDirection: 'row',
-        position: 'relative',
-
-       
-        marginLeft: 40,
-        marginRight: 40,
-        margin: 10,
     },
     buttonSection: {
         width: '100%', 
         alignSelf: 'center',
         borderBottomWidth: 0,
-        flex: 3,
+        flex: 5,
         flexDirection: 'column',
+        padding: 0,
+        margin: 0,
     },
     buttonBackTextStyle: {
         color: '#fafafa',
     },
-    formStyle: {
-        alignItems: 'center',
-        flexDirection: 'column',
-        flex: 10,
-
+    inputSection: {
+       flex: 8,
+       justifyContent: 'center',
+       alignItems: 'center',
     },
-   
+    lineStyle: {
+        flexDirection: 'row',
+        marginLeft: 40,
+        marginRight: 40,
+        margin: 10,
+        
+     },
+    IconStyle: {
+        alignSelf: 'center',
+    },
     iconSectionStyle: {
-        alignItems: 'center',
+        paddingBottom: 60,
         justifyContent: 'center',
+        alignItems: 'center',
+        border: 0,
         backgroundColor: '#66b3ff',
         flexDirection: 'column',
-        width: '100%',
         flex: 2,
+
     },
 }
 

@@ -103,12 +103,12 @@ const styles = {
         margin: 10,
         borderWidth: 0, 
     },
-    textStyle: {
-        flex: 1,
-        fontSize: 18,
-        textAlign: 'center',
-        lineHeight: 40
-    },
+    // textStyle: {
+    //     flex: 1,
+    //     fontSize: 18,
+    //     textAlign: 'center',
+    //     lineHeight: 40
+    // },
     containerStyle: {
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
         position: 'relative',

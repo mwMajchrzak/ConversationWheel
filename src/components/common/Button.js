@@ -17,6 +17,7 @@ const Button = ({ onPress, children, style, buttonTextStyle, isDisabled }) => {
 const styles = {
     textStyle: {
         alignSelf: 'center',
+ 
         fontSize: 16,
         fontWeight: '600',
         paddingTop: 10,
@@ -26,6 +27,7 @@ const styles = {
     buttonStyle: {
         flex: 1,
         alignSelf: 'stretch',
+        justifyContent: 'center',
         borderWidth: 1,
         borderColor: '#007aff', 
         marginLeft: 5,

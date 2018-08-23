@@ -13,6 +13,7 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import firebase from 'firebase';
 import { Provider } from 'react-redux';
+import  CustomHeader  from './components/common/CustomHeader';
 
 const DrawerStack = DrawerNavigator({
     Game: { 
@@ -72,22 +73,45 @@ const DrawerStack = DrawerNavigator({
 const logInNavigation = createStackNavigator({
     LogInForm: { screen: LoginForm }
 }, {
-    headerMode: 'none',
     navigationOptions: {
-    headerVisible: false,
-    },
+       // header: props => <CustomHeader {...props} />
+        headerStyle: {
+        height: 60,
+          backgroundColor: '#66b3ff',
+       
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontSize: 18,
+          fontWeight: '600',
+          color: 'white',
+          paddingBottom: 15
+        },
+    }, 
     cardStyle: {
-        shadowColor: 'transparent',
+    shadowColor: 'transparent',
     },
 });
 
 const createCategoryNavigation = createStackNavigator({
     CreateCategory: { screen: CreateCategory }
 }, {
-    headerMode: 'none',
+    //headerMode: 'none',
     navigationOptions: {
-    headerVisible: false,
-    },
+             title: 'Create Your Topics',
+            headerStyle: {
+              backgroundColor: '#f4511e',
+              shadowRadius: 0,
+              shadowOffset: {
+                height: 0,
+            },
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color: 'white',
+            },
+        }, 
     cardStyle: {
         shadowColor: 'transparent',
     },
@@ -112,21 +136,21 @@ const RootStack = createStackNavigator({
     createCategory: { screen: createCategoryNavigation }
 },
 {
-     title: 'Main',
+    // title: 'Main',
      initialRouteName: 'drawerStack',
      headerMode: 'none',
-        navigationOptions: {
+     navigationOptions: {
         headerVisible: false,
     },
     cardStyle: {
         shadowColor: 'transparent',
-    },
+    }, 
 });
 const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
 
 const MyStatusBar = ({backgroundColor, ...props}) => (
     <View style={[{ height: STATUSBAR_HEIGHT }, { backgroundColor }]}>
-      <StatusBar  backgroundColor={backgroundColor} {...props} />
+      <StatusBar style={{shadowOpacity: 0,}} backgroundColor={backgroundColor} {...props} />
     </View>
   );
 
@@ -154,7 +178,7 @@ const MyStatusBar = ({backgroundColor, ...props}) => (
              
          <Provider store={store}>
             <View style={{flex: 1}}>
-                <MyStatusBar backgroundColor="#66b3ff" barStyle="light-content" />
+                <MyStatusBar backgroundColor="#66b3ff" barStyle="light-content"  />
                 <RootStack />
             </View>   
          </Provider>

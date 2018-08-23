@@ -1,28 +1,47 @@
  
  import React from 'react';
-import { View, Platform } from 'react-native';
+import { View, Platform, Text } from 'react-native';
 
 
 const TopBar = (props) => {
 
     return (
-        <View style={[styles.containerStyle, props.style]} >
-            {props.children}
+        <View style={styles.containerStyle}>
+            <View style={[styles.iconSection, props.style]}>
+                {props.children}
+            </View>
+            <View style={styles.titleSection}>
+                <Text>{props.title}</Text>
+            </View>
         </View>
+
     );
 };
 
 const styles = {
-    containerStyle: {
+    iconSection: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-    //    / marginTop:( Platform.OS === 'ios' ) ? 20 : 0,
         height: 80,
         alignItems: 'center',
         padding: 15,
-        backgroundColor: '#66b3ff'
+       backgroundColor: '#66b3ff'
 
-    } 
+    },
+    containerStyle: {
+        flex: 1
+    },
+    titleSection: {
+        position: 'absolute',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        height: 80,
+        alignItems: 'center',
+   
+       // padding: 15,
+        //backgroundColor: '#66b3ff'
+
+    },  
     
 }
 

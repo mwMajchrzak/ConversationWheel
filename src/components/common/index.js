@@ -11,3 +11,4 @@ export * from './header';
 export * from './Input';
 export * from './Spinner';
 export * from './Messeage'
+export * from './ButtonLogInForm'
