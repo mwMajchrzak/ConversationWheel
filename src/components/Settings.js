@@ -9,10 +9,6 @@ class Settings extends Component {
     render () {
         return (
         <Wrapper> 
-            <TopBar> 
-                <MenuIcon onIconPress={this.onIconPress}/>
-                <LogInButton> LogIn </LogInButton>
-            </TopBar>
         </Wrapper>
         )
     }

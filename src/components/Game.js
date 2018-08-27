@@ -1,8 +1,7 @@
 import React, { Component, forceUpdate } from 'react';
-import { View, Button, TouchableWithoutFeedback } from 'react-native';
-import  { connect } from 'react-redux'
-
-import { Wrapper, LogInButton, TopBar, MenuIcon } from  './common';
+import { View, TouchableWithoutFeedback } from 'react-native';
+import { connect } from 'react-redux'
+import { Wrapper, UserIcon} from './common';
 import HeaderSection from './HeaderSection';
 import Pie from './Pie';
 import CategoryMenu from './CategoryMenu';
@@ -12,16 +11,15 @@ class Game extends Component {
 
     componentWillMount() {
         this.props.fetchCustomCategories();
-        if(this.props.user != null) this.props.fetchCategories();   
+        if (this.props.user != null) this.props.fetchCategories();
+    }
+    componentDidMount() {
+        this.props.navigation.setParams({ LogInLogOut: this._LogInLogOut });
     }
     componentWillReceiveProps(nextProps) {
-        if(nextProps.user != null) { return( this.props.fetchCategories()) }
+        if (nextProps.user != null) { return (this.props.fetchCategories()) }
     }
-    static navigationOptions = {
-        title: 'Game',
-        /* No more header config here! */
-      };
-  
+
     state = { 
         wasWheelSpinned: false,
         isMenuOpen: false,
@@ -29,6 +27,22 @@ class Game extends Component {
         category: 'Select Category', 
         topics: [],
     }
+
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Game',
+            headerRight: (
+                <View style={{ paddingRight: 20, paddingBottom: 15 }}>
+                    <UserIcon onIconPress={navigation.getParam('LogInLogOut')} />
+                </View>
+            ),
+        }
+    };
+
+    _LogInLogOut = () => {
+        const { navigation, user, logoutUser } = this.props
+        return (user != null) ? logoutUser() : navigation.navigate('logIn', {title: 'LOGIN'})
+    };
 
     updateCategory = (category, topics) => {
         this.setState({ category: category, topics: topics })
@@ -40,20 +54,15 @@ class Game extends Component {
         return (wasWheelSpinned ? `Let's talk about ${topic}` : "Spin the wheel and find a random topic!");
     }
 
-    renderLogInButtonText() { return (this.props.user != null) ? 'LogOut' : 'LogIn'}
+    /* lost functionality */
+    //renderLogInButtonText() { return (this.props.user != null) ? 'LogOut' : 'LogIn'}
 
-    onMenuIconPress = () => this.props.navigation.openDrawer();
 
-    onCreateButtonPress = () => this.props.navigation.navigate('CreateCategory');
+    onCreateButtonPress = () => this.props.navigation.navigate('CreateCategory', {title: 'Create New Category'});
 
     closeMenu = () => this.setState({ isMenuOpen: false});    
 
     toggleMenu = ()  => this.setState({ isMenuOpen: !this.state.isMenuOpen});   
-
-    passOnPressEvent = () => {
-        const { navigation, user, logoutUser } = this.props
-        return (user != null) ? logoutUser() : navigation.navigate('logIn', {title: 'LOGIN'})
-    };
 
     render() {
         console.log(this.state.topics)
@@ -61,10 +70,6 @@ class Game extends Component {
             <TouchableWithoutFeedback onPress={this.closeMenu}>
                 <View style={{ flex: 1}}>
                     <Wrapper> 
-                        <TopBar> 
-                            <MenuIcon onIconPress={this.onMenuIconPress}/>
-                            <LogInButton onPressEvent={this.passOnPressEvent}> {this.renderLogInButtonText()} </LogInButton>
-                        </TopBar>
                         <HeaderSection style={{flex: 2}} text={this.renderHeaderText()}/>
                         <CategoryMenu 
                             onItemPress={this.updateCategory}
