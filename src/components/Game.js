@@ -65,7 +65,6 @@ class Game extends Component {
     toggleMenu = ()  => this.setState({ isMenuOpen: !this.state.isMenuOpen});   
 
     render() {
-        console.log(this.state.topics)
         return (
             <TouchableWithoutFeedback onPress={this.closeMenu}>
                 <View style={{ flex: 1}}>

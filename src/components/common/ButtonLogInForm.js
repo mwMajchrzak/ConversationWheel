@@ -1,6 +1,7 @@
  
 import React, { Component } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
+import colors from '../../styles/colors'
 
 class ButtonLogInForm extends Component {
 
@@ -33,7 +34,7 @@ const styles = {
         fontWeight: '600',
         paddingTop: 10,
         paddingBottom: 10,
-        color: '#a6a6a6'
+        color: colors.grey
     },
 
     currentTextStyle: {
@@ -46,7 +47,7 @@ const styles = {
         height: 54, 
         flex: 0, 
         alignSelf: 'center',
-        marginBottm: 10,
+        marginBottom: 10,
         fontSize: 24,
         justifyContent: 'center',
 
@@ -55,7 +56,7 @@ const styles = {
     currentButtonStyle: {
 
         borderRadius: 27,
-        backgroundColor: '#0073e6',
+        backgroundColor: colors.darkBlue,
         shadowOffset:{  width: 0,  height: 0 },
         shadowRadius: 10,
         shadowColor: '#1a1a1a',

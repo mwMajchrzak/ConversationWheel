@@ -1,47 +1,41 @@
- 
- import React, { Component } from 'react';
-import { FlatList, Text } from 'react-native';
+
+import React, { Component } from 'react';
+import { Text, View } from 'react-native';
+import colors from '../styles/colors'
 
 export default class CategoriesList extends Component {
-    
-    createListOfTopics = () => {
-       const topicsList = Array.from(this.props.topics).map((object) => {
+
+    renderItem = () => {
+        const topicsList = Array.from(this.props.topics).map((object) => {
             return ({ topic: object, key: object });
-        });  
-        return topicsList;      
+        });
+        return topicsList.map((data) => { return <Text style={styles.textStyle}>{data.topic}</Text> })
     }
 
     render() {
         return (
-            <FlatList horizontal={true} alwaysBounceHorizontal={false} style={styles.listStyle}
-                data={this.createListOfTopics()}
-                renderItem={({ item }) => 
-                    <Text style={styles.textStyle}>{ item.topic} </Text>   
-                }
-            />
+            <View style={styles.listStyle} >
+                {this.renderItem()}
+            </View>
         );
     }
 };
- 
-const styles= {
+
+const styles = {
     listStyle: {
-       // width: '100%',
-        padding: 5,
-        margin: 5,
+        alignSelf: 'center',
         flexDirection: 'row',
-       flex: 1
+        flexWrap: 'wrap',
+        width: '80%',
     },
     textStyle: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 50,
+        textAlign: 'center',
         margin: 5,
         padding: 15,
-        backgroundColor: '#ff9999',
-        borderRadious: 2,
-        borderColor: 'black',
-        //flex: 1,
-        color: 'white',
-        fontSize: 20
+        lineHeight: 25,
+        backgroundColor: colors.blue,
+        color: colors.white,
+        fontSize: 16,
+        textTransform: 'uppercase'
     }
 }

@@ -5,6 +5,7 @@ import { CardSection, Input, Button, Spinner } from './common';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { GoBackIcon, TopBar, Wrapper, ButtonLogInForm  } from './common'; 
 import Icon from 'react-native-vector-icons/Ionicons';
+import colors from '../styles/colors'
 
 class LoginForm extends Component {
     state = {
@@ -96,7 +97,7 @@ class LoginForm extends Component {
     
     renderButton = () => {
     
-        if( this.props.loading) {
+        if( this.props.loading ) {
            return (
             <CardSection style={styles.buttonSection}>
                <Spinner  size="large"/>
@@ -119,6 +120,7 @@ class LoginForm extends Component {
     renderReapetPassword() {
         if(this.state.SignUpPage) { 
             return (
+                
                 <View style={styles.lineStyle}>
                     
                     <CardSection style={styles.inputStyle}> 
@@ -150,8 +152,8 @@ class LoginForm extends Component {
                         <Icon 
                     
                             type="Ionicons" name="md-contact"
-                            size={80} 
-                            color={'#ffffff'}
+                            size={60} 
+                            color={colors.white}
                         />
                     </View>
                 
@@ -224,7 +226,7 @@ const styles = {
         width: '76%',
         alignSelf: 'center',
         padding: 17,
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         height: 55,
         borderRadius: 10,
 
@@ -255,17 +257,17 @@ const styles = {
     formStyle: {
         alignItems: 'center',
         flexDirection: 'column',
-        flex: 10,
+        flex: 9,
 
     },
    
     iconSectionStyle: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#66b3ff',
+        backgroundColor: colors.blue,
         flexDirection: 'column',
         width: '100%',
-        flex: 2,
+        flex: 3,
     },
 }
 

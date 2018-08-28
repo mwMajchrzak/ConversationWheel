@@ -14,16 +14,17 @@ import reducers from './reducers';
 import firebase from 'firebase';
 import { Provider } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
+import colors from './styles/colors'
 
 const styles = {
     headerStyle: {
         height: 60,
-        backgroundColor: '#66b3ff',
+        backgroundColor: colors.blue,
     },
     headerTitleStyle: {
         fontSize: 18,
         fontWeight: '600',
-        color: 'white',
+        color: colors.white,
         paddingBottom: 15
     },
 }

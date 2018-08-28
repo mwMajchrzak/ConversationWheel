@@ -2,8 +2,9 @@ import React, { Component, componentDidUpdate } from 'react';
 import { connect } from 'react-redux'
 import { categoryCreate, saveTopic, topicChanged, categoryChanged } from '../actions';
 import { CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper, Messeage } from './common';
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import TopicsList from './TopicsList'
+import colors from '../styles/colors'
 
 class CreateCategory extends Component {
 
@@ -57,13 +58,13 @@ class CreateCategory extends Component {
     renderCategoryButton = () => {
         const { topics, category } = this.props
         return (
-            <Button 
-                isDisabled={(topics == '') || (category == '')} 
-                onPress={this.onCategoryButtonPress.bind(this)} 
+            <Button
+                isDisabled={(topics == '') || (category == '')}
+                onPress={this.onCategoryButtonPress.bind(this)}
                 style={styles.categoryButton}
                 buttonTextStyle={styles.buttonTextStyle}
             >
-                addCategory
+                CREATE
             </Button>
         );
     }
@@ -80,7 +81,7 @@ class CreateCategory extends Component {
         return (
             <CircleButton
                 isDisabled={this.props.topic == ''}
-                icon="plus" color="#6699ff"
+                icon="plus" color={colors.darkBlue}
                 onPress={this.onTopicButtonPress.bind(this)}
             />
         );
@@ -88,17 +89,15 @@ class CreateCategory extends Component {
     renderTopicsList = () => {
         if (!(this.props.topics == '')) {
             return (
-                <View style={{ flex: 2 }}>
-                <Text style={styles.topicText}>Your topics</Text>
-                <TopicsList topics={this.props.topics} />
-                </View>
+                <ScrollView >
+                    <TopicsList topics={this.props.topics} />
+                </ScrollView>
             )
         }
         return (
-            <View style={{ flex: 2 }}>
-                <Text style={styles.instructionTitleStyle}> Create category!</Text>
-                <Text style={styles.instructionStyle}> You didn't create any categories yet.</Text>
-                <Text style={styles.instructionStyle}> Press add button to create the first one.</Text>
+            <View >
+                <Text style={styles.instructionStyle}> You didn't add any topics yet.</Text>
+                <Text style={styles.instructionStyle}> Use add button to do so.</Text>
             </View>
         );
     }
@@ -106,48 +105,56 @@ class CreateCategory extends Component {
     renderError = () => {
         if (this.state.error) {
             return (
-                <View style={{ height: 50 }}>
-                    <Text style={styles.errorTextStyle}>Category already exist, choose another name</Text>
+                <View style={{ height: 20 }}>
+                    <Text style={styles.errorTextStyle}>This category already exists!</Text>
                 </View>
             )
         }
     }
 
+    renderTitle = () => { return (this.props.topics == '') ? 'Create topics!' : 'Your Topics' }
+
     render() {
+        console.log('loading', this.props.loading)
         return (
+          
             <Wrapper>
                 <View style={styles.formSection}>
-                    {this.renderError()}
                     <View style={styles.inputSecitonRow} >
-
                         <Input
                             inputPropsStyle={styles.inputStyle}
                             label={false}
-                            placeholder="   Type name of category..."
+                            placeholder="Type name of category..."
                             onChangeText={this.onCategoryChange.bind(this)}
                             value={this.props.category}
                         />
-
                     </View>
                     <View style={styles.inputSecitonRow}>
-
                         <Input
-                            inputPropsStyle={[styles.inputStyle, { marginRight: 30 }]}
+                            inputPropsStyle={[styles.inputStyle, { marginRight: 22 }]}
                             label={false}
                             autoCapitalize="none"
-                            placeholder="   type new topic..."
+                            placeholder="Type new topic..."
                             onChangeText={this.onTopicChange.bind(this)}
                             value={this.props.topic}
                         />
-                        {this.renderTopicButton()}
-
+                        <CircleButton
+                            isDisabled={this.props.topic == ''}
+                            icon="plus" color={colors.pink}
+                            onPress={this.onTopicButtonPress.bind(this)}
+                            size={50}
+                        />
                     </View>
+                   
                 </View>
-            
-                {this.renderTopicsList()}
-
-        
-                <View style={{ flex: 1 }}>
+                <View style={{ height: 30 }}>
+                    {this.renderError()}
+                </View>
+                <View style={styles.topicsSection}>
+                    <Text style={styles.instructionTitleStyle}> {this.renderTitle()} </Text>
+                    {this.renderTopicsList()}
+                </View>
+                <View style={styles.buttonSection}>
                     {this.renderCategoryButton()}
                 </View>
                 <Messeage
@@ -155,24 +162,32 @@ class CreateCategory extends Component {
                     onAccept={this.onAccept.bind(this)}
                     onDecline={this.onDecline.bind(this)}
                 />
-
             </Wrapper>
         )
     }
 }
 const styles = {
     formSection: {
-        flex: 3,
+        flex: 8,
         alignItems: 'center',
+        
         justifyContent: 'center',
     },
-    inputSecitonRow: {
-        width: '80%',
-        height: 65,
-        margin: 15,
-        flexDirection: 'row',
-        alignItems: 'center',
+    topicsSection: {
+        flex: 8,
+    },
+    buttonSection: {
+        flex: 4,
+        backgroundColor: colors.white,
         justifyContent: 'center',
+    },     
+    inputSecitonRow: {
+        width: '76%',
+        height: 65,
+        margin: 7,
+        flexDirection: 'row',
+        // alignItems: 'center',
+        // justifyContent: 'center',
 
     },
     topicText: {
@@ -182,7 +197,7 @@ const styles = {
     inputStyle: {
         height: 50,
         borderRadius: 25,
-    
+
         flex: 1,
         alignSelf: 'center',
         backgroundColor: 'white',
@@ -191,12 +206,12 @@ const styles = {
         shadowRadius: 10,
         shadowColor: '#1a1a1a',
         shadowOpacity: 0.2,
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: 30,
+        paddingRight: 30,
         flexDirection: 'row',
         position: 'relative',
 
-        
+
     },
     errorTextStyle: {
         fontSize: 15,
@@ -204,34 +219,38 @@ const styles = {
         color: 'red'
     },
     categoryButton: {
-        width: '50%', 
-        height: 60, 
-        marginBottom: 30,
-        flex: 0, 
+        width: '40%',
+        height: 60,
+        marginBottom: 15,
+        flex: 0,
         alignSelf: 'center',
         borderRadius: 30,
-        backgroundColor: '#0073e6',
+        backgroundColor: colors.darkBlue,
     },
     buttonTextStyle: {
         color: 'white'
     },
     instructionTitleStyle: {
-        fontSize: 30,
-        color: '#808080',
-        margin: 20,
+        textAlign: 'center',
+        fontSize: 20,
+        color: colors.grey,
+        marginBottom: 20,
+        marginTop: 10,
         fontWeight: '400',
     },
     instructionStyle: {
-        fontSize: 16,
-        color: '#9999',
-        fontWeight: '600',
-       //lineHeight: 20,
+        textAlign: 'center',
+        fontSize: 14,
+        color: colors.lightGrey,
+        fontWeight: '400',
+        //lineHeight: 20,
     },
 }
 
 const mapStateToProps = state => {
     return {
         category: state.cat.category,
+        loading: state.cat.loading,
         topic: state.cat.topic,
         topics: state.cat.topics,
         user: state.auth.user,

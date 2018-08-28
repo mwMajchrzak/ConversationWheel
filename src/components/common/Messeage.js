@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/Octicons';
 import { Text, View, Modal } from 'react-native';
 import { CardSection } from './CardSection';
 import { Button } from './Button';
+import colors from '../../styles/colors'
 
 const Messeage = ({  children, visible, onAccept, onDecline }) => {
 const { 
@@ -56,7 +57,7 @@ const styles = {
         border: 0,
         height: '20%',
         width: '80%',
-        backgroundColor: '#66b3ff',
+        backgroundColor: colors.blue,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         shadowOffset:{  width: 10,  height: 10,  },
@@ -87,13 +88,13 @@ const styles = {
         alignSelf: 'center',
         margin: 10,
         borderRadius: 20,
-        backgroundColor: '#0073e6',
+        backgroundColor: colors.darkBlue,
         marginTop: '10%'
        
 
     },
     buttonTextStyle: {
-        color: '#f2f2f2',
+        color: colors.white
     },
     buttonBackStyle: {
         width: '50%',
@@ -119,7 +120,7 @@ const styles = {
     },
     messeageStyle: {
         fontSize: 12,
-        color: '#9999',
+        color: colors.lightGrey,
         textAlign: 'center',
         margin: 10,
         fontWeight: '600',
@@ -128,13 +129,13 @@ const styles = {
     },
     messeageTitleStyle: {
         fontSize: 30,
-        color: '#808080',
+        color: colors.grey,
         margin: 10,
         fontWeight: '400', 
     },
     iconStyle: {
         alignSelf: 'center',
-        color: '6699ff',
+        color: colors.white,
     },
 
 }

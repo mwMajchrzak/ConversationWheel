@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import ListItem from './ListItem';
 import  { connect } from 'react-redux'
+import colors from '../styles/colors';
 
 class UserCategoriesList extends Component {
     
@@ -52,20 +53,32 @@ const stylesChildren = {
         flex: 1,
         height: 50,
         borderRadius: 25,
-        margin: 3,
-        shadowOffset:{  width: 3,  height: 3,  },
+        marginTop: 12,
+
+
+        // shadowOffset:{  width: 0,  height: 0 },
+        // shadowRadius: 10,
+        // shadowColor: '#1a1a1a',
+        // shadowOpacity: 0.2,
+
+        shadowOffset:{ width: 2,  height: 2 },
         shadowColor: '#1a1a1a',
-        shadowOpacity: 0.1,
+        shadowOpacity: 0.2,
+
+        shadowRadius: 8,
+
+
         backgroundColor: '#fbfbfb',
-        width: '90%',
+        width: '85%',
     },
     clickedButtonStyle: {
        borderWidth: 0.5,
        borderColor: '#f2f2f2',
-       backgroundColor: '#ffffff',
+       backgroundColor: colors.white,
        shadowOpacity: 0.5,
        height: 53,
-       width: '95%',
+       width: '85%',
+       
     },
     textStyle: {
         fontSize: 18,
