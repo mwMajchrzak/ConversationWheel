@@ -1,6 +1,4 @@
 export * from './Wrapper';
-export * from './LogInButton';
-export * from './TopBar';
 export * from './MenuIcon';
 export * from './GoBackIcon';
 export * from './UserIcon';

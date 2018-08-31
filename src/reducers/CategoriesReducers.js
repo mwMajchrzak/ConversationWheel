@@ -1,7 +1,7 @@
-import {  CATEGORIES_FETCH, CATEGORIES_FETCH_SUCCESS, CATEGORY_CREATED, SAVE_TOPIC, CUSTOM_CATEGORIES_FETCH_SUCCESS, TOPIC_CHANGED, CATEGORY_CHANGED } from '../actions/types'; 
+import {  FILL_INPUTS, CLICKEDCATEGORY_CHANGED, CATEGORIES_FETCH, CATEGORIES_FETCH_SUCCESS, CATEGORY_CREATED, SAVE_TOPIC, CUSTOM_CATEGORIES_FETCH_SUCCESS, TOPIC_CHANGED, CATEGORY_CHANGED } from '../actions/types'; 
 import data from '../CustomCategories.json';
 
-const INITIAL_STATE = { customCategories:'', userCategories: '', category:'', topic:'', topics:'', loading: false };
+const INITIAL_STATE = { clickedCategory:'', customCategories:'', userCategories: '', category:'', topic:'', topics:'', loading: false };
 
 
 
@@ -20,26 +20,26 @@ export default (state = INITIAL_STATE, action) => {
         case SAVE_TOPIC:
             return { ...state, topics: [...state.topics, action.payload], topic:''}; 
 
+        
+        case FILL_INPUTS:
+            return { ...state, topics: action.payload[0], category: action.payload[1], topic:''};     
+
         case CATEGORY_CREATED:
             return { ...state, category:'', topic:'', topics:''}
     
-        // case CATEGORIES_FETCH_SUCCESS:
-        //     return { ...state, userCategories: action.payload  }
 
         case CATEGORIES_FETCH:
             return { ...state, loading: true }
 
+
+
         case CATEGORIES_FETCH_SUCCESS:
-             return { ...state, loading: false, userCategories: action.payload }
+            return { ...state, loading: false, userCategories: action.payload }
 
-
-
-        //     case LOGIN_USER: 
-        //     return { ...state, loading: true, error: ''};
-
-        // case LOGIN_USER_SUCCESS:
+ 
+        case CLICKEDCATEGORY_CHANGED: 
+            return { ...state, clickedCategory: action.payload };
          
-        //     return { ...state, ...INITIAL_STATE, user: action.payload };
         default:
             return state;
     }

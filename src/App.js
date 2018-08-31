@@ -6,6 +6,7 @@ import ManageCategories from './components/ManageCategories';
 import Friends from './components/Friends';
 import Settings from './components/Settings';
 import CreateCategory from './components/CreateCategory';
+import EditCategory from './components/EditCategory';
 import LoginForm from './components/LoginForm';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import ReduxThunk from 'redux-thunk';
@@ -56,6 +57,7 @@ const GameStack = createStackNavigator({
     GameScreen: { screen: Game, }
 }, {
         navigationOptions: ({ navigation }) => ({
+            title: 'Game',
             headerLeft: <HamburgerIcon navigation={navigation} />,
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle
@@ -66,6 +68,7 @@ const ManageCategoriesStack = createStackNavigator({
     ManageCategoriesScreen: { screen: ManageCategories, }
 }, {
         navigationOptions: ({ navigation }) => ({
+            title: 'Your Categories',
             headerLeft: <HamburgerIcon navigation={navigation} />,
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle
@@ -76,6 +79,7 @@ const ConnectWithFriendsScreen = createStackNavigator({
     ConnectWithFriendsScreen: { screen: Friends, }
 }, {
         navigationOptions: ({ navigation }) => ({
+            title: 'Connect',
             headerLeft: <HamburgerIcon navigation={navigation} />,
             headerStyle: styles.headerStyle,
             headerTitleStyle: styles.headerTitleStyle
@@ -128,19 +132,9 @@ const logInNavigation = createStackNavigator({
     LogInForm: { screen: LoginForm }
 }, {
         navigationOptions: {
-            // header: props => <CustomHeader {...props} />
-            headerStyle: {
-                height: 60,
-                backgroundColor: '#66b3ff',
-
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                fontSize: 18,
-                fontWeight: '600',
-                color: 'white',
-                paddingBottom: 15
-            },
+            headerStyle: styles.headerStyle,
+           // headerTintColor: '#fff',
+            headerTitleStyle: styles.headerTitleStyle
         },
         cardStyle: {
             shadowColor: 'transparent',
@@ -152,6 +146,18 @@ const createCategoryNavigation = createStackNavigator({
 }, {
 
         navigationOptions: {
+            title: 'Create Your Category',
+            headerStyle: styles.headerStyle,
+          //  headerTintColor: '#fff',
+            headerTitleStyle: styles.headerTitleStyle,
+        },
+});
+const editCategoryNavigation = createStackNavigator({
+    EditCategory: { screen: EditCategory }
+}, {
+
+        navigationOptions: {
+            title: 'Edit Category',
             headerStyle: {
                 height: 60,
                 backgroundColor: '#66b3ff',
@@ -165,10 +171,7 @@ const createCategoryNavigation = createStackNavigator({
                 paddingBottom: 15
             },
         },
-        cardStyle: {
-            shadowColor: 'transparent',
-        },
-    });
+});
 
 const stackNavigation = createStackNavigator({
     DrawerStack1: { screen: DrawerStack }
@@ -183,7 +186,8 @@ const stackNavigation = createStackNavigator({
 const RootStack = createStackNavigator({
     drawerStack: { screen: stackNavigation },
     logIn: { screen: logInNavigation },
-    createCategory: { screen: createCategoryNavigation }
+    createCategory: { screen: createCategoryNavigation },
+    editCategory: { screen: editCategoryNavigation }
 },
     {
         initialRouteName: 'drawerStack',

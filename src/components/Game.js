@@ -1,4 +1,4 @@
-import React, { Component, forceUpdate } from 'react';
+import React, { Component } from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux'
 import { Wrapper, UserIcon} from './common';
@@ -30,7 +30,6 @@ class Game extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            title: 'Game',
             headerRight: (
                 <View style={{ paddingRight: 20, paddingBottom: 15 }}>
                     <UserIcon onIconPress={navigation.getParam('LogInLogOut')} />
@@ -44,7 +43,7 @@ class Game extends Component {
         return (user != null) ? logoutUser() : navigation.navigate('logIn', {title: 'LOGIN'})
     };
 
-    updateCategory = (category, topics) => {
+    updateCategory = (key, topics, category) => {
         this.setState({ category: category, topics: topics })
         this.toggleMenu()
      };

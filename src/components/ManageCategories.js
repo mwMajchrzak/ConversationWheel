@@ -1,39 +1,24 @@
 import React, { Component } from 'react';
-import { MenuIcon, Wrapper, UserIcon, CircleButton, Messeage, Spinner } from './common';
+import { Wrapper, UserIcon, CircleButton, Messeage, Spinner } from './common';
 import UserCategoriesList from './UserCategoriesList';
 import { Text, View } from 'react-native'
 import { connect } from 'react-redux'
-import { categoryDelete, fetchCategories, logoutUser } from '../actions';
+import { categoryDelete, fetchCategories, logoutUser, clickedCategoryChanged } from '../actions';
 import colors from '../styles/colors';
-
 
 
 class ManageCategories extends Component {
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.user != this.props.user) { 
-            return (
-               // this.setState({ isLoading: true })
-                this.props.fetchCategories()
-            ) 
-        }
+        if (nextProps.user != this.props.user) { return this.props.fetchCategories() }
     }
 
-    componentDidMount() {
-        this.props.navigation.setParams({ LogInLogOut: this._LogInLogOut });
-    }
+    componentDidMount() { this.props.navigation.setParams({ LogInLogOut: this._LogInLogOut }) }
 
-    state = {
-        isLoading: false,
-        isButtonClicked: false,
-        clickedCategory: '',
-        showModal: this.props.user == null
-
-    }
+    state = { showModal: this.props.user == null }
 
     static navigationOptions = ({ navigation }) => {
         return {
-            title: 'My Categories',
             headerRight: (
                 <View style={{ paddingRight: 20, paddingBottom: 15 }}>
                     <UserIcon onIconPress={navigation.getParam('LogInLogOut')} />
@@ -57,36 +42,38 @@ class ManageCategories extends Component {
     onDecline = () => {
         this.setState({ showModal: false });
         this.props.navigation.navigate('Game');
-
     }
-    updateData = data => {
-        console.log(data);
-        this.setState(data)
 
+
+    // o co chodzi???
+
+    updateData = data => {
+        this.setState(data)
     };
 
 
+    buttonNotClicked = () => this.props.clickedCategoryChanged('');  
 
+    buttonClicked = (category) => this.props.clickedCategoryChanged(category);    
 
-    buttonNotClicked = () => this.setState({ clickedCategory: '', isButtonClicked: false });
+    onCreateButtonPress = () => this.props.navigation.navigate('createCategory');
 
-    buttonClicked = (category) => this.setState({ clickedCategory: category, isButtonClicked: true });
+    onEditButtonPress = () => this.props.navigation.navigate('editCategory');
 
-    onCreateButtonPress = () => this.props.navigation.navigate('createCategory', { title: 'Create New Category' });
 
     onDeleteButtonPress = () => {
-        const { clickedCategory } = this.state;
-        this.props.categoryDelete({ clickedCategory });
+        const { categoryDelete, clickedCategory } = this.props
+        categoryDelete({ clickedCategory });
         this.buttonNotClicked()
     }
 
     renderButtons = () => {
-        if (this.state.isButtonClicked) {
+        if (!(this.props.clickedCategory == '')) {
             return (
-                <View style={{ justifyContent: 'space-between', width: '60%', flexDirection: 'row',}}>
-                    <CircleButton size= {50} onPress={this.buttonNotClicked} icon="chevron-left" color={colors.pink} />
-                    <CircleButton size= {60} onPress={this.onDeleteButtonPress} icon="trash-2" color={colors.pink} />
-                    <CircleButton size= {50} icon="edit" color={colors.pink} />
+                <View style={{ justifyContent:'space-between', width:'60%', flexDirection: 'row',}}>
+                    <CircleButton size={50} onPress={this.buttonNotClicked} icon="chevron-left" color={colors.pink} />
+                    <CircleButton size={60} onPress={this.onDeleteButtonPress} icon="trash-2" color={colors.pink} />
+                    <CircleButton size={50} icon="edit" onPress={this.onEditButtonPress}  color={colors.pink} />
                 </View>
             )
         }
@@ -94,19 +81,13 @@ class ManageCategories extends Component {
 
     }
     renderList = () => {
-        if(this.props.loading ){
-            return (
-                <Spinner />
-            )
-        }
-        if (!(this.props.userCategories == '')) {
-            return (
-                <UserCategoriesList
-                    clickedCategory={this.state.clickedCategory}
-                    onItemPress={this.buttonClicked}
-                    textStyle={styles.textStyleList} />
-            )
-        }
+
+        const { loading, userCategories } = this.props
+
+        if(loading) { return <Spinner/> }
+
+        if (!(userCategories =='')) { return <UserCategoriesList onItemPress={this.buttonClicked}/> }
+
         return (
             <View style={styles.instrucitonContainerStyle}>
                 <Text style={styles.instructionTitleStyle}> Create category!</Text>
@@ -117,8 +98,6 @@ class ManageCategories extends Component {
     }
 
     render() {  
-        console.log('loading', this.props.loading)
-
         return (
             <Wrapper style={styles.wrapperStyle}>
                 <View style={styles.listSection}>
@@ -132,7 +111,6 @@ class ManageCategories extends Component {
                     onAccept={this.onAccept.bind(this)}
                     onDecline={this.onDecline.bind(this)}
                 />
-
             </Wrapper>
         )
     }
@@ -145,8 +123,6 @@ const styles = {
     },
 
     buttonsSection: {
-        
-        //flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
@@ -188,12 +164,15 @@ const styles = {
     },
 }
 const mapStateToProps = state => {
+    console.log('mapstatetoprops', state.cat.userCategories)
     return {
         userCategories: state.cat.userCategories,
         customCategories: state.cat.customCategories,
         user: state.auth.user,
-        loading: state.cat.loading
+        loading: state.cat.loading,
+        clickedCategory: state.cat.clickedCategory,
+
     }
 };
 
-export default connect(mapStateToProps, { logoutUser, categoryDelete, fetchCategories })(ManageCategories);
+export default connect(mapStateToProps, { clickedCategoryChanged, logoutUser, categoryDelete, fetchCategories })(ManageCategories);

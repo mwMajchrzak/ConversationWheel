@@ -5,14 +5,13 @@ import { View, Text, Button, TouchableOpacity } from 'react-native';
 class ListItem extends Component {
    
     handlePress() {
-        return this.props.onItemPress(this.props.category, this.props.topics);     
+        return this.props.onItemPress(this.props.item.key, this.props.item.topics, this.props.item.category);     
      };
-
     renderSeparator = () => { return this.props.separator != null ? <View style = {styles.lineStyle} /> : null }
 
     renderTopics = () => { 
-        const { topics, topicsStyle } = this.props
-        return topics != null ? <Text style={topicsStyle}>{topics.length}</Text> : null  
+        const { topicsStyle, item } = this.props
+        return item.topics != null ? <Text style={topicsStyle}>{item.topics.length}</Text> : null  
     }        
     render() {
         return (
@@ -23,7 +22,7 @@ class ListItem extends Component {
                     disabled={this.props.disabled}
                 >
                     <Text style={[styles.textStyle, this.props.textStyle]}>
-                        {this.props.category}
+                        {this.props.item.category}
                     </Text>
                     {this.renderTopics()}
                 </TouchableOpacity>
@@ -37,13 +36,11 @@ class ListItem extends Component {
 const styles = {
     container: {
         alignSelf: 'center',
-        //justifyContent: 'center',
         width: '100%',
         height: 50,
     
     },
     textStyle: {
-        //alignSelf: 'center',
         fontSize: 18,
     },
     lineStyle:{
