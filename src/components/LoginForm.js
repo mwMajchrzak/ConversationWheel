@@ -44,8 +44,11 @@ class LoginForm extends Component {
     
     _onBackIconPress = () =>   { 
         const { goBack, state } = this.props.navigation
+        console.log( state.params)
+       state.params.refresh()
         goBack(null)
-        //if( state.params != null ) { state.params.updateData({ showModal: true }) }
+   
+        //if( this.props.user != null ) { state.params.updateData({ showModal: true }) }
     }
     
 

@@ -11,11 +11,12 @@ class ManageCategories extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.user != this.props.user) { return this.props.fetchCategories() }
+        console.log('will receive props')
     }
 
     componentDidMount() { this.props.navigation.setParams({ LogInLogOut: this._LogInLogOut }) }
 
-    state = { showModal: this.props.user == null }
+    state = { showModal: '' }
 
     static navigationOptions = ({ navigation }) => {
         return {
@@ -37,7 +38,8 @@ class ManageCategories extends Component {
 
     onAccept = () => {
         this.setState({ showModal: false });
-        this.props.navigation.navigate('LogInForm', { title: 'LOGIN' }, { updateData: this.updateData });
+        
+        this.props.navigation.navigate('LogInForm', { title: 'LOGIN', refresh: this.refreshFunction });
     }
     onDecline = () => {
         this.setState({ showModal: false });
@@ -45,11 +47,14 @@ class ManageCategories extends Component {
     }
 
 
-    // o co chodzi???
+    //o co chodzi???
 
-    updateData = data => {
-        this.setState(data)
-    };
+   refreshFunction = () => { 
+    console.log('refresh')
+    console.log(this.props.user)
+    this.setState({ showModal: this.props.user == null })
+    //this.forceUpdate() 
+};
 
 
     buttonNotClicked = () => this.props.clickedCategoryChanged('');  
@@ -98,6 +103,8 @@ class ManageCategories extends Component {
     }
 
     render() {  
+        console.log('render')
+        console.log('this.state.showModal', this.state.showModal)
         return (
             <Wrapper style={styles.wrapperStyle}>
                 <View style={styles.listSection}>
