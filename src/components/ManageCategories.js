@@ -5,61 +5,57 @@ import { Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { categoryDelete, fetchCategories, logoutUser, clickedCategoryChanged } from '../actions';
 import colors from '../styles/colors';
+import UserButtonComponent from './common/UserButtonComponent'
+//import { runInThisContext } from 'vm';
 
 
 class ManageCategories extends Component {
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.user != this.props.user) { return this.props.fetchCategories() }
-        console.log('will receive props')
-    }
+    componentWillReceiveProps(nextProps) { nextProps.user != this.props.user ? this.props.fetchCategories() : null }
 
-    componentDidMount() { this.props.navigation.setParams({ LogInLogOut: this._LogInLogOut }) }
+    componentDidMount() {  this.props.navigation.setParams({ LogInPress: this._LogInPress, UserPress: this._UserPress }) }
 
-    state = { showModal: '' }
+    componentWillMount() { this.setState({ showModal: this.props.user == null }) }
+
+    state = { showModal: true }
+
 
     static navigationOptions = ({ navigation }) => {
         return {
             headerRight: (
-                <View style={{ paddingRight: 20, paddingBottom: 15 }}>
-                    <UserIcon onIconPress={navigation.getParam('LogInLogOut')} />
-                </View>
-            ),
+                <UserButtonComponent
+                    navigation={navigation}
+                    LogInPress={navigation.getParam('LogInPress')}
+                    UserPress={navigation.getParam('UserPress')}
+                />),
         }
     };
 
-    _LogInLogOut = () => {
-        const { navigation, user, logoutUser } = this.props
-        if(user != null) {
+
+   // _LogInPress = () => { this.props.navigation.navigate('logIn', {title: 'LOGIN', refresh: this.refreshFunction }) };
+    _UserPress = () => { 
+        const { navigation, logoutUser } = this.props
             navigation.navigate('Game')
             logoutUser()
-        } 
     };
+
+ 
 
     onAccept = () => {
         this.setState({ showModal: false });
-        
         this.props.navigation.navigate('LogInForm', { title: 'LOGIN', refresh: this.refreshFunction });
     }
+    
     onDecline = () => {
         this.setState({ showModal: false });
         this.props.navigation.navigate('Game');
     }
 
+    refreshFunction = () => { this.setState({ showModal: this.props.user == null }) };
 
-    //o co chodzi???
+    buttonNotClicked = () => this.props.clickedCategoryChanged('');
 
-   refreshFunction = () => { 
-    console.log('refresh')
-    console.log(this.props.user)
-    this.setState({ showModal: this.props.user == null })
-    //this.forceUpdate() 
-};
-
-
-    buttonNotClicked = () => this.props.clickedCategoryChanged('');  
-
-    buttonClicked = (category) => this.props.clickedCategoryChanged(category);    
+    buttonClicked = (category) => this.props.clickedCategoryChanged(category);
 
     onCreateButtonPress = () => this.props.navigation.navigate('createCategory');
 
@@ -75,10 +71,10 @@ class ManageCategories extends Component {
     renderButtons = () => {
         if (!(this.props.clickedCategory == '')) {
             return (
-                <View style={{ justifyContent:'space-between', width:'60%', flexDirection: 'row',}}>
+                <View style={{ justifyContent: 'space-between', width: '60%', flexDirection: 'row', }}>
                     <CircleButton size={50} onPress={this.buttonNotClicked} icon="chevron-left" color={colors.pink} />
                     <CircleButton size={60} onPress={this.onDeleteButtonPress} icon="trash-2" color={colors.pink} />
-                    <CircleButton size={50} icon="edit" onPress={this.onEditButtonPress}  color={colors.pink} />
+                    <CircleButton size={50} icon="edit" onPress={this.onEditButtonPress} color={colors.pink} />
                 </View>
             )
         }
@@ -89,9 +85,9 @@ class ManageCategories extends Component {
 
         const { loading, userCategories } = this.props
 
-        if(loading) { return <Spinner/> }
+        if (loading) { return <Spinner /> }
 
-        if (!(userCategories =='')) { return <UserCategoriesList onItemPress={this.buttonClicked}/> }
+        if (!(userCategories == '')) { return <UserCategoriesList onItemPress={this.buttonClicked} /> }
 
         return (
             <View style={styles.instrucitonContainerStyle}>
@@ -102,9 +98,7 @@ class ManageCategories extends Component {
         );
     }
 
-    render() {  
-        console.log('render')
-        console.log('this.state.showModal', this.state.showModal)
+    render() {
         return (
             <Wrapper style={styles.wrapperStyle}>
                 <View style={styles.listSection}>
@@ -112,7 +106,7 @@ class ManageCategories extends Component {
                 </View>
                 <View style={styles.buttonsSection}>
                     {this.renderButtons()}
-                 </View>
+                </View>
                 <Messeage
                     visible={this.state.showModal}
                     onAccept={this.onAccept.bind(this)}
@@ -149,8 +143,8 @@ const styles = {
     },
     listSection: {
         height: '100%',
-       paddingTop: 15,
-      
+        paddingTop: 15,
+
     },
     instrucitonContainerStyle: {
         flex: 1,
@@ -171,7 +165,6 @@ const styles = {
     },
 }
 const mapStateToProps = state => {
-    console.log('mapstatetoprops', state.cat.userCategories)
     return {
         userCategories: state.cat.userCategories,
         customCategories: state.cat.customCategories,

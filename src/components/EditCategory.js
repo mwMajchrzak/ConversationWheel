@@ -14,7 +14,7 @@ class EditCategory extends Component {
         error: false
     }
 
-    removeError = () => { this.setState({ error: false })  }
+    removeError = () => { this.setState({ error: false }) }
     static navigationOptions = ({ navigation }) => {
 
         const { state } = navigation;
@@ -28,11 +28,11 @@ class EditCategory extends Component {
     };
 
 
-     componentWillMount() {
-       const { clickedCategory, userCategories, fillInputs } = this.props 
-       const category = userCategories.filter(function(item) {return item.key === clickedCategory}) 
+    componentWillMount() {
+        const { clickedCategory, userCategories, fillInputs } = this.props
+        const category = userCategories.filter(function (item) { return item.key === clickedCategory })
         fillInputs(category[0].category, category[0].topics)
-     }
+    }
 
 
 
@@ -45,21 +45,21 @@ class EditCategory extends Component {
     _onBackIconPress = () => {
         const { navigation, fillInputs } = this.props
         navigation.goBack(null)
-        fillInputs('','')
+        fillInputs('', '')
         // if( navigation.state.params != null ) { state.params.updateData({ showModal: true }) }
     }
 
 
     onEditButtonPress() {
         const { topics, category, clickedCategory, userCategories, categorySave, navigation } = this.props;
-        const alreadyExists = userCategories !='' && userCategories.some((el) => { return (el.key !== clickedCategory && el.category === category) });
+        const alreadyExists = userCategories != '' && userCategories.some((el) => { return (el.key !== clickedCategory && el.category === category) });
         const key = clickedCategory
 
-        if(alreadyExists) { this.setState({ error: true }) }
+        if (alreadyExists) { this.setState({ error: true }) }
 
         else {
-            categorySave({ category, topics, key }) 
-              navigation.goBack(null)
+            categorySave({ category, topics, key })
+            navigation.goBack(null)
         }
     }
 
@@ -88,7 +88,7 @@ class EditCategory extends Component {
     render() {
         return (
             <Wrapper>
-                <CategoryForm  error={this.state.error} removeError={this.removeError} {...this.props}/>
+                <CategoryForm error={this.state.error} removeError={this.removeError} {...this.props} />
                 <View style={styles.buttonSection}>
                     {this.renderCategoryButton()}
                 </View>
@@ -102,12 +102,12 @@ class EditCategory extends Component {
     }
 }
 const styles = {
-    
+
     buttonSection: {
         flex: 4,
         backgroundColor: colors.white,
         justifyContent: 'center',
-    },     
+    },
     categoryButton: {
         width: '40%',
         height: 60,
@@ -120,7 +120,7 @@ const styles = {
     buttonTextStyle: {
         color: 'white'
     },
-  
+
 }
 
 const mapStateToProps = state => {
@@ -129,7 +129,7 @@ const mapStateToProps = state => {
         loading: state.cat.loading,
         topic: state.cat.topic,
         topics: state.cat.topics,
-      //  user: state.auth.user,
+        //  user: state.auth.user,
         userCategories: state.cat.userCategories,
         clickedCategory: state.cat.clickedCategory
     };

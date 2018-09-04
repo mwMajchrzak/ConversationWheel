@@ -17,7 +17,6 @@ class Pie extends Component {
     
     createListOfColors = () => {
         const { selectedTopics } = this.props
-        console.log( selectedTopics )
         const colors = selectedTopics.map(() => {
            return { color: `#${((1<<24)*Math.random()|0).toString(16)}`}
         });

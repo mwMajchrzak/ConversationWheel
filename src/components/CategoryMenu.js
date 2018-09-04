@@ -45,7 +45,6 @@ class CategoryMenu extends Component {
     }    
 
     render() {
-        console.log('this.props.selectedCategory', this.props.selectedCategory)
         return (
                 <View style={styles.containerCategoryMenu} >
                         <SelectedCategory  

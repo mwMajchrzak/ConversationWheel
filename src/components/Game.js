@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux'
-import { Wrapper, UserIcon} from './common';
+import { Wrapper, UserIcon, } from './common';
+import UserButtonComponent from './common/UserButtonComponent'
 import HeaderSection from './HeaderSection';
 import Pie from './Pie';
 import CategoryMenu from './CategoryMenu';
 import { logoutUser, fetchCustomCategories, fetchCategories } from '../actions';
+
 
 class Game extends Component {
 
@@ -14,7 +16,7 @@ class Game extends Component {
         if (this.props.user != null) this.props.fetchCategories();
     }
     componentDidMount() {
-        this.props.navigation.setParams({ LogInLogOut: this._LogInLogOut });
+        this.props.navigation.setParams({ LogInPress: this._LogInPress, UserPress: this._UserPress });
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.user != null) { return (this.props.fetchCategories()) }
@@ -28,20 +30,25 @@ class Game extends Component {
         topics: [],
     }
 
+
+    
+    
     static navigationOptions = ({ navigation }) => {
         return {
             headerRight: (
-                <View style={{ paddingRight: 20, paddingBottom: 15 }}>
-                    <UserIcon onIconPress={navigation.getParam('LogInLogOut')} />
-                </View>
-            ),
+                <UserButtonComponent
+                    navigation={navigation}
+                    LogInPress={navigation.getParam('LogInPress')}
+                    UserPress={navigation.getParam('UserPress')}
+                />),
         }
     };
 
-    _LogInLogOut = () => {
-        const { navigation, user, logoutUser } = this.props
-        return (user != null) ? logoutUser() : navigation.navigate('logIn', {title: 'LOGIN'})
-    };
+    refreshFunction = () => { console.log('refresh function')};
+    _LogInPress = () => { this.props.navigation.navigate('logIn', {title: 'LOGIN', refresh: this.refreshFunction }) };
+    _UserPress = () => { this.props.logoutUser() };
+
+
 
     updateCategory = (key, topics, category) => {
         this.setState({ category: category, topics: topics })
@@ -53,11 +60,16 @@ class Game extends Component {
         return (wasWheelSpinned ? `Let's talk about ${topic}` : "Spin the wheel and find a random topic!");
     }
 
-    /* lost functionality */
-    //renderLogInButtonText() { return (this.props.user != null) ? 'LogOut' : 'LogIn'}
 
 
-    onCreateButtonPress = () => this.props.navigation.navigate('CreateCategory', {title: 'Create New Category'});
+    // CO W FUNKCJI ?
+
+
+
+    onCreateButtonPress = () => {
+        this.setState({ isMenuOpen: false })
+        this.props.navigation.navigate('CreateCategory', {title: 'Create New Category'})
+    }
 
     closeMenu = () => this.setState({ isMenuOpen: false});    
 

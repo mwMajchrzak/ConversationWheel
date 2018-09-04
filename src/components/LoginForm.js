@@ -76,7 +76,7 @@ class LoginForm extends Component {
 
         const { user, navigation } = this.props
         console.log( user);
-        return (prevProps.user != user) ? navigation.navigate('drawerStack') : null
+        return (prevProps.user != user) ? navigation.goBack(null) : null
     };
 
    renderError() {

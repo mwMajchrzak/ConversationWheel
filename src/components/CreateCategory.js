@@ -8,10 +8,17 @@ import CategoryForm from './CategoryForm';
 
 class CreateCategory extends Component {
 
+
+    componentWillMount() { this.setState({ showModal: this.props.user == null }) }
+
+    state = { showModal: true }
+
     state = {
-        showModal: this.props.user == null,
+        showModal: true,
         error: false
     }
+
+    
 
     static navigationOptions = ({ navigation }) => {
         return {
@@ -31,7 +38,6 @@ class CreateCategory extends Component {
         const { navigation, fillInputs } = this.props
         navigation.goBack(null)
         fillInputs('','')
-        // if( state.params != null ) { state.params.updateData({ showModal: true }) }
     }
 
     removeError = () => { this.setState({ error: false })  }
@@ -58,14 +64,21 @@ class CreateCategory extends Component {
             </Button>
         );
     }
+
+
     onAccept = () => {
         this.setState({ showModal: false });
-        this.props.navigation.navigate('LogInForm', { title: 'LOGIN' }, { updateData: this.updateData });
+        this.props.navigation.navigate('LogInForm', { title: 'LOGIN', refresh: this.refreshFunction });
     }
+    
     onDecline = () => {
         this.setState({ showModal: false });
         this.props.navigation.navigate('Game');
     }
+
+
+    
+    refreshFunction = () => { this.setState({ showModal: this.props.user == null }) };
 
     render() {
         return (
