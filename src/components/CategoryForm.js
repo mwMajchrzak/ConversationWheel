@@ -58,8 +58,7 @@ class CategoryForm extends Component {
 
     render() {
         return (
-          
-            <View style={{flex: 16}}>
+            <View style={{ flex: 16 }}>
                 <View style={styles.formSection}>
                     <View style={styles.inputSecitonRow} >
                         <Input
@@ -86,7 +85,6 @@ class CategoryForm extends Component {
                             size={50}
                         />
                     </View>
-                   
                 </View>
                 <View style={{ height: 30 }}>
                     {this.renderError()}
@@ -96,7 +94,6 @@ class CategoryForm extends Component {
                     {this.renderTopicsList()}
                 </View>
           </View>
-      
         )
     }
 }
@@ -104,7 +101,6 @@ const styles = {
     formSection: {
         flex: 8,
         alignItems: 'center',
-        
         justifyContent: 'center',
     },
     topicsSection: {
@@ -120,9 +116,6 @@ const styles = {
         height: 65,
         margin: 7,
         flexDirection: 'row',
-        // alignItems: 'center',
-        // justifyContent: 'center',
-
     },
     topicText: {
         fontSize: 17,
@@ -131,11 +124,9 @@ const styles = {
     inputStyle: {
         height: 50,
         borderRadius: 25,
-
         flex: 1,
         alignSelf: 'center',
         backgroundColor: 'white',
-
         shadowOffset: { width: 0, height: 0 },
         shadowRadius: 10,
         shadowColor: '#1a1a1a',
@@ -144,8 +135,6 @@ const styles = {
         paddingRight: 30,
         flexDirection: 'row',
         position: 'relative',
-
-
     },
     errorTextStyle: {
         fontSize: 15,
@@ -168,7 +157,6 @@ const styles = {
         fontSize: 14,
         color: colors.lightGrey,
         fontWeight: '400',
-        //lineHeight: 20,
     },
 }
 

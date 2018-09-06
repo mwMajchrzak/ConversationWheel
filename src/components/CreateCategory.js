@@ -14,11 +14,10 @@ class CreateCategory extends Component {
     state = { showModal: true }
 
     state = {
-        showModal: true,
+            showModal: true,
         error: false
     }
 
-    
 
     static navigationOptions = ({ navigation }) => {
         return {
