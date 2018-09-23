@@ -1,7 +1,7 @@
-import React, { Component, componentDidUpdate } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { categorySave, fillInputs, categoryCreate, saveTopic, topicChanged, categoryChanged } from '../actions';
-import { CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper, Messeage } from './common';
+import { CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper, TrashIcon } from './common';
 import { Text, View, ScrollView } from 'react-native';
 //import TopicsList from './TopicsList'
 import colors from '../styles/colors'
@@ -11,12 +11,13 @@ class EditCategory extends Component {
 
     state = {
         //showModal: this.props.user == null,
-        error: false
+        error: false,
+        deleteMode: true,
     }
 
     removeError = () => { this.setState({ error: false }) }
     static navigationOptions = ({ navigation }) => {
-
+        const { params = {} } = navigation.state
         const { state } = navigation;
         return {
             headerLeft: (
@@ -24,31 +25,50 @@ class EditCategory extends Component {
                     <GoBackIcon onIconPress={navigation.getParam('onBackIconPress')} />
                 </View>
             ),
+            headerRight: (
+                <View style={{ paddingRight: 20, paddingBottom: 15 }}>
+                    { params.deleteMode ? <TrashIcon onIconPress={navigation.getParam('changeHeaderRight')}/> : <Text>Done</Text> }
+                </View>
+
+            )
         }
     };
+    _changeHeaderRight = () => {
+       
+        const {deleteMode} = this.state
+     
+        this.props.navigation.setParams({
+            deleteMode
+        })
+        console.log('changeheader right')
+        this.setState({deleteMode: !deleteMode})
 
+      }
 
     componentWillMount() {
+        const {deleteMode} = this.state
         const { clickedCategory, userCategories, fillInputs } = this.props
         const category = userCategories.filter(function (item) { return item.key === clickedCategory })
         fillInputs(category[0].category, category[0].topics)
+        this.props.navigation.setParams({
+            deleteMode
+        })
+
     }
-
-
-
-
-
 
     componentDidMount() {
-        this.props.navigation.setParams({ onBackIconPress: this._onBackIconPress });
+        this.props.navigation.setParams({ 
+            onBackIconPress: this._onBackIconPress, 
+            changeHeaderRight: this._changeHeaderRight 
+        });
     }
+
     _onBackIconPress = () => {
         const { navigation, fillInputs } = this.props
         navigation.goBack(null)
         fillInputs('', '')
         // if( navigation.state.params != null ) { state.params.updateData({ showModal: true }) }
     }
-
 
     onEditButtonPress() {
         const { topics, category, clickedCategory, userCategories, categorySave, navigation } = this.props;
