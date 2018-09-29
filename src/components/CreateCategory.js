@@ -18,7 +18,6 @@ class CreateCategory extends Component {
         error: false
     }
 
-    
 
     static navigationOptions = ({ navigation }) => {
         return {

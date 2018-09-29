@@ -22,17 +22,14 @@ class Game extends Component {
         if (nextProps.user != null) { return (this.props.fetchCategories()) }
     }
 
-    state = { 
+    state = {
         wasWheelSpinned: false,
         isMenuOpen: false,
-        topic:'',
-        category: 'Select Category', 
+        topic: '',
+        category: 'Select Category',
         topics: [],
     }
 
-
-    
-    
     static navigationOptions = ({ navigation }) => {
         return {
             headerRight: (
@@ -44,8 +41,8 @@ class Game extends Component {
         }
     };
 
-    refreshFunction = () => { console.log('refresh function')};
-    _LogInPress = () => { this.props.navigation.navigate('logIn', {title: 'LOGIN', refresh: this.refreshFunction }) };
+    refreshFunction = () => { console.log('refresh function') };
+    _LogInPress = () => { this.props.navigation.navigate('logIn', { title: 'LOGIN', refresh: this.refreshFunction }) };
     _UserPress = () => { this.props.logoutUser() };
 
 
@@ -53,7 +50,7 @@ class Game extends Component {
     updateCategory = (key, topics, category) => {
         this.setState({ category: category, topics: topics })
         this.toggleMenu()
-     };
+    };
 
     renderHeaderText() {
         const { wasWheelSpinned, topic } = this.state
@@ -62,33 +59,29 @@ class Game extends Component {
 
 
 
-    // CO W FUNKCJI ?
-
-
-
     onCreateButtonPress = () => {
         this.setState({ isMenuOpen: false })
-        this.props.navigation.navigate('CreateCategory', {title: 'Create New Category'})
+        this.props.navigation.navigate('CreateCategory', { title: 'Create New Category' })
     }
 
-    closeMenu = () => this.setState({ isMenuOpen: false});    
+    closeMenu = () => this.setState({ isMenuOpen: false });
 
-    toggleMenu = ()  => this.setState({ isMenuOpen: !this.state.isMenuOpen});   
+    toggleMenu = () => this.setState({ isMenuOpen: !this.state.isMenuOpen });
 
     render() {
         return (
             <TouchableWithoutFeedback onPress={this.closeMenu}>
-                <View style={{ flex: 1}}>
-                    <Wrapper> 
-                        <HeaderSection style={{flex: 2}} text={this.renderHeaderText()}/>
-                        <CategoryMenu 
+                <View style={{ flex: 1 }}>
+                    <Wrapper>
+                        <HeaderSection style={{ flex: 2 }} text={this.renderHeaderText()} />
+                        <CategoryMenu
                             onItemPress={this.updateCategory}
                             selectedCategory={this.state.category}
                             onCreateButtonPress={this.onCreateButtonPress}
                             isMenuOpen={this.state.isMenuOpen}
                             toggleMenu={this.toggleMenu}
                         />
-                        <Pie selectedTopics={this.state.topics}/>
+                        <Pie selectedTopics={this.state.topics} />
                     </Wrapper>
                 </View>
             </TouchableWithoutFeedback>

@@ -19,6 +19,8 @@ class CategoriesList extends Component {
                 data={this.list()}
                 renderItem={({ item }) => 
                     <ListItem 
+                        showNumber={false}
+                        style={styles.itemStyle}
                         textStyle={this.props.textStyle}
                         onItemPress={this.props.onItemPress}
                         isCategorySame = { item.category == this.props.selectedCategory } 
@@ -31,6 +33,12 @@ class CategoriesList extends Component {
     }
 };
  
+const styles = {
+    itemStyle: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+}
 
 const mapStateToProps = state => { return { categories: state.cat } };
 
