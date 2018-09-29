@@ -39,23 +39,12 @@ class SelectedCategory extends Component {
 };
 const styles = {
     container: {
-       // borderColor: 'grey',
-       // borderWidth: 1,
+        borderColor: 'grey',
+        borderWidth: 1,
         alignSelf: 'center',
         justifyContent: 'center',
         width: '100%',
         height: 50,
-        backgroundColor: 'white',
-
-
-        borderRadius: 10,
-
-        shadowOffset:{  width: 0,  height: 0 },
-        shadowRadius: 15,
-        shadowColor: 'black',
-        margin: 10,
-       shadowOpacity: 0.3,
-
     },
     IconArrowStyle: {
         position: 'absolute',

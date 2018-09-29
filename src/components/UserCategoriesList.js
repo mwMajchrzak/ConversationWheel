@@ -18,7 +18,6 @@ class UserCategoriesList extends Component {
                 data={this.createList()}
                 renderItem={({ item }) =>
                     <ListItem
-                        showNumber={true}
                         style={[stylesChildren.buttonStyle, this.asignStyle(item.key)]}
                         onItemPress={this.props.onItemPress}
                         textStyle={stylesChildren.textStyle}
