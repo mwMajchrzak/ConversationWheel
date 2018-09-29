@@ -28,17 +28,6 @@ class CategoryForm extends Component {
             />
         );
     }
-
-    renderEidtTopicButton = () => {
-        return (
-            <CircleButton
-                isDisabled={this.props.topic == ''}
-                icon="plus" color={colors.darkBlue}
-                onPress={this.onTopicButtonPress.bind(this)}
-            />
-        );
-    } 
-
     renderTopicsList = () => {
         if (!(this.props.topics == '')) {
             return (
@@ -49,7 +38,6 @@ class CategoryForm extends Component {
         }
         return (
             <View >
-                <Text style={styles.instructionTitleStyle}>Create Topics!</Text>
                 <Text style={styles.instructionStyle}> You didn't add any topics yet.</Text>
                 <Text style={styles.instructionStyle}> Use add button to do so.</Text>
             </View>
@@ -65,6 +53,8 @@ class CategoryForm extends Component {
             )
         }
     }
+
+    renderTitle = () => { return (this.props.topics == '') ? 'Create topics!' : 'Your Topics' }
 
     render() {
         return (
@@ -100,6 +90,7 @@ class CategoryForm extends Component {
                     {this.renderError()}
                 </View>
                 <View style={styles.topicsSection}>
+                    <Text style={styles.instructionTitleStyle}> {this.renderTitle()} </Text>
                     {this.renderTopicsList()}
                 </View>
           </View>

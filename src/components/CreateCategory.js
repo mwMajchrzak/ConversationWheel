@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { categoryCreate, saveTopic, fillInputs, topicChanged, categoryChanged } from '../actions';
-import { Button, GoBackIcon, Wrapper, Messeage } from './common';
+import {  Button,   GoBackIcon,  Wrapper, Messeage } from './common';
 import { View } from 'react-native';
 import colors from '../styles/colors'
 import CategoryForm from './CategoryForm';
@@ -12,7 +12,7 @@ class CreateCategory extends Component {
     componentWillMount() { this.setState({ showModal: this.props.user == null }) }
 
     state = {
-        showModal: true,
+            showModal: true,
         error: false
     }
 
@@ -34,15 +34,18 @@ class CreateCategory extends Component {
     _onBackIconPress = () => {
         const { navigation, fillInputs } = this.props
         navigation.goBack(null)
-        fillInputs('', '')
+        fillInputs('','')
     }
 
-    removeError = () => { this.setState({ error: false }) }
+    removeError = () => { this.setState({ error: false })  }
+
+
 
     onCategoryButtonPress() {
-        const { topics, category, userCategories, categoryCreate } = this.props;
+ //const key = Date.now().toString();
+        const { topics, category, userCategories, categoryCreate} = this.props;
         const found = userCategories == '' ? false : userCategories.some((el) => { return el.category === category });
-        found ? this.setState({ error: true }) : categoryCreate({ category, topics })
+        found ? this.setState({ error: true }) : categoryCreate({ category, topics }) 
     }
 
     renderCategoryButton = () => {
@@ -64,20 +67,20 @@ class CreateCategory extends Component {
         this.setState({ showModal: false });
         this.props.navigation.navigate('LogInForm', { title: 'LOGIN', refresh: this.refreshFunction });
     }
-
+    
     onDecline = () => {
         this.setState({ showModal: false });
         this.props.navigation.navigate('Game');
     }
 
 
-
+    
     refreshFunction = () => { this.setState({ showModal: this.props.user == null }) };
 
     render() {
         return (
             <Wrapper>
-                <CategoryForm error={this.state.error} removeError={this.removeError} />
+                <CategoryForm error={this.state.error} removeError={this.removeError}/>
                 <View style={styles.buttonSection}>
                     {this.renderCategoryButton()}
                 </View>
@@ -91,24 +94,25 @@ class CreateCategory extends Component {
     }
 }
 const styles = {
+    
     buttonSection: {
         flex: 4,
         backgroundColor: colors.white,
-        justifyContent: "center"
-    },
+        justifyContent: 'center',
+    },     
     categoryButton: {
-        width: "40%",
+        width: '40%',
         height: 60,
         marginBottom: 15,
         flex: 0,
-        alignSelf: "center",
+        alignSelf: 'center',
         borderRadius: 30,
-        backgroundColor: colors.darkBlue
+        backgroundColor: colors.darkBlue,
     },
     buttonTextStyle: {
-        color: "white"
-    }
-};
+        color: 'white'
+    },
+}
 
 const mapStateToProps = state => {
     return {
