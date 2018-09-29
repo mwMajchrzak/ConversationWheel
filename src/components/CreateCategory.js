@@ -11,8 +11,6 @@ class CreateCategory extends Component {
 
     componentWillMount() { this.setState({ showModal: this.props.user == null }) }
 
-
-
     state = {
         showModal: true,
         error: false
