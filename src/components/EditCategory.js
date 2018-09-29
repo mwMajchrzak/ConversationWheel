@@ -26,13 +26,13 @@ class EditCategory extends Component {
                     <GoBackIcon onIconPress={navigation.getParam('onBackIconPress')} />
                 </View>
             ),
-            headerRight:  ({state}) => {
-                if (params.deleteModeParams) {
-                return <EditDone />
-                }
-                return (
-                <EditDone onButtonPress={navigation.getParam('changeHeaderRight')} deletMode={params.deleteModeParams}/>
-                )
+            // headerRight:  ({state}) => {
+            //     if (params.deleteModeParams) {
+            //     return <EditDone />
+            //     }
+            //     return (
+            //     <EditDone onButtonPress={navigation.getParam('changeHeaderRight')} deletMode={params.deleteModeParams}/>
+            //     )
             }
         }
     };
@@ -92,14 +92,6 @@ class EditCategory extends Component {
             </Button>
         );
     }
-    // onAccept = () => {
-    //     this.setState({ showModal: false });
-    //     this.props.navigation.navigate('LogInForm', { title: 'LOGIN' }, { updateData: this.updateData });
-    // }
-    // onDecline = () => {
-    //     this.setState({ showModal: false });
-    //     this.props.navigation.navigate('Game');
-    // }
 
     render() {
         console.log('state',this.state.deleteMode)
@@ -109,11 +101,6 @@ class EditCategory extends Component {
                 <View style={styles.buttonSection}>
                     {this.renderCategoryButton()}
                 </View>
-                {/* <Messeage
-                    visible={this.state.showModal}
-                    onAccept={this.onAccept.bind(this)}
-                    onDecline={this.onDecline.bind(this)}
-                /> */}
             </Wrapper>
         )
     }
