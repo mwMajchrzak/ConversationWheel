@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { categoryCreate, saveTopic, fillInputs, topicChanged, categoryChanged } from '../actions';
 import {  Button,   GoBackIcon,  Wrapper, Messeage } from './common';
+import EditDone from './common/EditDone';
 import { View } from 'react-native';
 import colors from '../styles/colors'
 import CategoryForm from './CategoryForm';
@@ -23,6 +24,9 @@ class CreateCategory extends Component {
                 <View style={{ paddingLeft: 20, paddingBottom: 15 }}>
                     <GoBackIcon onIconPress={navigation.getParam('onBackIconPress')} />
                 </View>
+            ),
+            headerRight: (
+                <EditDone />
             ),
         }
     };

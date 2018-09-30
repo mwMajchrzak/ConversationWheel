@@ -1,70 +1,46 @@
-import React, { Component, componentDidUpdate } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { categorySave, fillInputs, categoryCreate, saveTopic, topicChanged, categoryChanged } from '../actions';
-import { CardSection, Input, Button, Spinner, CircleButton, GoBackIcon, TopBar, Wrapper, Messeage } from './common';
-import { Text, View, ScrollView } from 'react-native';
-//import TopicsList from './TopicsList'
+import { Button, GoBackIcon, Wrapper } from './common';
+import EditDone from './common/EditDone';
+import { View } from 'react-native';
 import colors from '../styles/colors'
 import CategoryForm from './CategoryForm';
 
 class EditCategory extends Component {
 
-    state = {
-        //showModal: this.props.user == null,
+    state = { error: false }
 
-        error: false
-    }
     removeError = () => { this.setState({ error: false }) }
-    static navigationOptions = ({ navigation }) => {
-        const { params ={} } = navigation.state
-        //const { state } = navigation;
 
-        const { state } = navigation;
+    static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: (
                 <View style={{ paddingLeft: 20, paddingBottom: 15 }}>
                     <GoBackIcon onIconPress={navigation.getParam('onBackIconPress')} />
                 </View>
             ),
-            // headerRight:  ({state}) => {
-            //     if (params.deleteModeParams) {
-            //     return <EditDone />
-            //     }
-            //     return (
-            //     <EditDone onButtonPress={navigation.getParam('changeHeaderRight')} deletMode={params.deleteModeParams}/>
-            //     )
-            }
+            headerRight: (
+                <EditDone />
+            ),
         }
     };
-    // _changeHeaderRight = ({}) => {
-    //     const {deleteMode} = this.state
-    //     this.setState({ deleteMode: !deleteMode})
-    //     this.props.navigation.setParams({ deleteModeParams: !this.props.navigation.state.params.deleteModeParams })
-    // }
-    //     }
-    // };
-
 
     componentWillMount() {
         const { clickedCategory, userCategories, fillInputs } = this.props
         const category = userCategories.filter(function (item) { return item.key === clickedCategory })
         fillInputs(category[0].category, category[0].topics)
-        // this.props.navigation.setParams({
-        //     deleteModeParams: false
-        // })
-    
     }
 
     componentDidMount() {
         this.props.navigation.setParams({ onBackIconPress: this._onBackIconPress });
     }
+
     _onBackIconPress = () => {
         const { navigation, fillInputs } = this.props
         navigation.goBack(null)
         fillInputs('', '')
-        // if( navigation.state.params != null ) { state.params.updateData({ showModal: true }) }
     }
-
 
     onEditButtonPress() {
         const { topics, category, clickedCategory, userCategories, categorySave, navigation } = this.props;
@@ -72,7 +48,6 @@ class EditCategory extends Component {
         const key = clickedCategory
 
         if (alreadyExists) { this.setState({ error: true }) }
-
         else {
             categorySave({ category, topics, key })
             navigation.goBack(null)
@@ -94,7 +69,7 @@ class EditCategory extends Component {
     }
 
     render() {
-        console.log('state',this.state.deleteMode)
+        console.log('state', this.state.deleteMode)
         return (
             <Wrapper>
                 <CategoryForm error={this.state.error} removeError={this.removeError} {...this.props} />
@@ -133,7 +108,6 @@ const mapStateToProps = state => {
         loading: state.cat.loading,
         topic: state.cat.topic,
         topics: state.cat.topics,
-        //  user: state.auth.user,
         userCategories: state.cat.userCategories,
         clickedCategory: state.cat.clickedCategory
     };

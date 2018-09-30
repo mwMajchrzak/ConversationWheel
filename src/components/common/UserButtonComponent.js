@@ -10,7 +10,7 @@ class UserButtonComponent extends Component {
 
     handlePress = () => {
         this.setState({ showWindow: false })
-        this.props.UserPress()
+        this.props.logoutUser()
     }
 
     state = { showWindow: false }
@@ -21,10 +21,10 @@ class UserButtonComponent extends Component {
             return (
                 <View>
                     <View style={styles.iconSection}>
-                        <UserIcon onIconPress={() => {this.setState({ showWindow: true })}}/>
+                        <UserIcon onIconPress={() => { this.setState({ showWindow: true }) }} />
                     </View>
                     <Modal visible={this.state.showWindow} transparent>
-                        <TouchableOpacity style={styles.screenStyle} onPress={() => {this.setState({ showWindow: false })}}>
+                        <TouchableOpacity style={styles.screenStyle} onPress={() => { this.setState({ showWindow: false }) }}>
                             <View style={styles.containerWindowStyle}>
                                 <View style={styles.windowSectionStyle}>
                                     <Text style={styles.windowTextStyle}>
@@ -36,7 +36,6 @@ class UserButtonComponent extends Component {
                                         LOG OUT
                                     </Text>
                                 </TouchableOpacity>
-
                             </View>
                         </TouchableOpacity >
                     </Modal>
@@ -95,8 +94,8 @@ const styles = {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-       // marginLeft: 5,
-      //  marginRight: 5,
+        // marginLeft: 5,
+        //  marginRight: 5,
     },
 
 }

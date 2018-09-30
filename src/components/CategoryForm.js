@@ -8,7 +8,7 @@ import colors from '../styles/colors'
 
 class CategoryForm extends Component {
 
-  //  state = { error: false  }
+    //  state = { error: false  }
 
     onCategoryChange(text) {
         this.props.categoryChanged(text);
@@ -17,7 +17,7 @@ class CategoryForm extends Component {
 
     onTopicChange(text) { this.props.topicChanged(text) }
 
-    onTopicButtonPress = () => {  this.props.saveTopic(this.props.topic) }
+    onTopicButtonPress = () => { this.props.saveTopic(this.props.topic) }
 
     renderTopicButton = () => {
         return (
@@ -38,6 +38,7 @@ class CategoryForm extends Component {
         }
         return (
             <View >
+                <Text style={styles.instructionTitleStyle}> Create topics! </Text>
                 <Text style={styles.instructionStyle}> You didn't add any topics yet.</Text>
                 <Text style={styles.instructionStyle}> Use add button to do so.</Text>
             </View>
@@ -53,8 +54,6 @@ class CategoryForm extends Component {
             )
         }
     }
-
-    renderTitle = () => { return (this.props.topics == '') ? 'Create topics!' : 'Your Topics' }
 
     render() {
         return (
@@ -90,10 +89,9 @@ class CategoryForm extends Component {
                     {this.renderError()}
                 </View>
                 <View style={styles.topicsSection}>
-                    <Text style={styles.instructionTitleStyle}> {this.renderTitle()} </Text>
                     {this.renderTopicsList()}
                 </View>
-          </View>
+            </View>
         )
     }
 }
@@ -110,7 +108,7 @@ const styles = {
         flex: 4,
         backgroundColor: colors.white,
         justifyContent: 'center',
-    },     
+    },
     inputSecitonRow: {
         width: '76%',
         height: 65,

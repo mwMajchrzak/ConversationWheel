@@ -1,22 +1,43 @@
 
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import colors from '../styles/colors'
+import { connect } from 'react-redux'
 
-export default class CategoriesList extends Component {
+class CategoriesList extends Component {
+
+    handlePress = (topic) => {
+        console.log('pressed', topic)
+    }
 
     renderItem = () => {
         const topicsList = Array.from(this.props.topics).map((object) => {
             return ({ topic: object, key: object });
         });
-        return topicsList.map((data) => { return <Text style={styles.textStyle}>{data.topic}</Text> })
+        return topicsList.map((data) => {
+            if (this.props.deleteMode) {
+                return (
+                    <TouchableOpacity onPress={this.handlePress} style={styles.listStyle} >
+                        <Text style={styles.textStyle}>{data.topic}</Text>
+                    </TouchableOpacity>
+                )
+            }
+            return (
+                <View style={styles.listStyle} >
+                    <Text style={styles.textStyle}>{data.topic}</Text>
+                </View>
+            )
+
+        })
     }
 
     render() {
         return (
-            <View style={styles.listStyle} >
-                {this.renderItem()}
+            <View>
+                { this.renderItem() }
             </View>
+            
+
         );
     }
 };
@@ -39,3 +60,6 @@ const styles = {
         textTransform: 'uppercase'
     }
 }
+const mapStateToProps = state => { return { deleteMode: state.cat.deleteMode } };
+
+export default connect(mapStateToProps, {})(CategoriesList);

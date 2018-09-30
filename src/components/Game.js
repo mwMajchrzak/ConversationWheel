@@ -6,7 +6,7 @@ import UserButtonComponent from './common/UserButtonComponent'
 import HeaderSection from './HeaderSection';
 import Pie from './Pie';
 import CategoryMenu from './CategoryMenu';
-import { logoutUser, fetchCustomCategories, fetchCategories } from '../actions';
+import { fetchCustomCategories, fetchCategories } from '../actions';
 
 
 class Game extends Component {
@@ -36,16 +36,13 @@ class Game extends Component {
                 <UserButtonComponent
                     navigation={navigation}
                     LogInPress={navigation.getParam('LogInPress')}
-                    UserPress={navigation.getParam('UserPress')}
                 />),
         }
     };
 
     refreshFunction = () => { console.log('refresh function') };
+
     _LogInPress = () => { this.props.navigation.navigate('logIn', { title: 'LOGIN', refresh: this.refreshFunction }) };
-    _UserPress = () => { this.props.logoutUser() };
-
-
 
     updateCategory = (key, topics, category) => {
         this.setState({ category: category, topics: topics })
@@ -56,8 +53,6 @@ class Game extends Component {
         const { wasWheelSpinned, topic } = this.state
         return (wasWheelSpinned ? `Let's talk about ${topic}` : "Spin the wheel and find a random topic!");
     }
-
-
 
     onCreateButtonPress = () => {
         this.setState({ isMenuOpen: false })
@@ -92,4 +87,4 @@ class Game extends Component {
 
 const mapStateToProps = state => { return { user: state.auth.user } };
 
-export default connect(mapStateToProps, { logoutUser, fetchCustomCategories, fetchCategories })(Game);
+export default connect(mapStateToProps, { fetchCustomCategories, fetchCategories })(Game);
